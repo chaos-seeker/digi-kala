@@ -35,14 +35,14 @@ const slides: Slide[] = [
 
 export const HeroSlider = () => {
   return (
-    <section className="relative w-full h-[400px] container overflow-hidden group">
+    <section className="relative w-full h-[400px] container group">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={0}
         slidesPerView={1}
         navigation={{
-          nextEl: '.hero-slider-next',
-          prevEl: '.hero-slider-prev',
+          nextEl: '.hero-slider-prev',
+          prevEl: '.hero-slider-next',
         }}
         pagination={{
           clickable: true,
@@ -66,6 +66,7 @@ export const HeroSlider = () => {
                 fill
                 className="object-cover"
                 priority
+                unoptimized
               />
             </a>
           </SwiperSlide>
@@ -81,8 +82,12 @@ export const HeroSlider = () => {
           <ChevronRight size={24} />
         </div>
       </div>
-      <div className="hero-slider-pagination absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2"></div>
+      <div className="hero-slider-pagination absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2"></div>
       <style jsx global>{`
+        .hero-slider-pagination {
+          bottom: 16px !important;
+        }
+
         .hero-slider-bullet {
           width: 8px;
           height: 8px;

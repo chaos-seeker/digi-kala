@@ -1,9 +1,11 @@
-import { Feed } from "@/containers/routes/home/feed";
+import { Amazing } from "@/containers/routes/home/amazing";
 import { HeroSlider } from "@/containers/routes/home/hero-slider";
+import { Story } from "@/containers/routes/home/story";
 
 export default function Home() {
   return <>
-  <Feed />
+  <Story />
   <HeroSlider />
+  <Amazing />
   </>
 }

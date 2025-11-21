@@ -82,7 +82,7 @@ const stories: Story[] = [
 
 const STORY_DURATION = 5000;
 
-export const Feed = () => {
+export const Story = () => {
   const router = useRouter();
   const [isViewing, setIsViewing] = useState(false);
   const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
