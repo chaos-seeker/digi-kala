@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { LogIn, SearchIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function Header() {
   return (
@@ -17,7 +18,7 @@ export default function Header() {
               height={150}
             />
           </Link>
-          <div className='hidden lg:block'>
+          <div className="hidden lg:block">
             <Search />
           </div>
           <Login />
@@ -32,16 +33,19 @@ export default function Header() {
 
 const Login = () => {
   return (
-    <button className="text-sm border rounded-lg px-3 py-2.5 flex items-center gap-1 hover:bg-primary hover:text-white transition-all duration-300">
+    <Button
+      variant="outline"
+      className="gap-1 hover:bg-primary hover:text-white"
+    >
       <LogIn size={18} />
       <p>ورود | ثبت نام</p>
-    </button>
+    </Button>
   );
 };
 
 const Search = () => {
   return (
-    <button className="flex items-center w-full lg:w-[300px] gap-2 border rounded-lg p-3">
+    <button className="flex items-center w-full lg:w-[400px] gap-2 border rounded-lg p-3">
       <SearchIcon size={18} className="text-gray-400" />
       <p className="text-sm flex gap-1 text-gray-400">
         جستجو در{' '}
