@@ -9,6 +9,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/ui/dialog';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/ui/tooltip';
 import { useKillua } from 'killua';
 import { Flame, LogIn, SearchIcon, ShoppingBag, UserIcon } from 'lucide-react';
 import Image from 'next/image';
@@ -26,18 +32,20 @@ export default function Header() {
               <Image
                 src="images/layout/logo.svg"
                 alt="logo"
-                width={150}
-                height={150}
+                width={130}
+                height={130}
               />
             </Link>
             <div className="hidden lg:block">
               <Search />
             </div>
-            <div className="flex items-center gap-2">
-              {user.isReady &&
-                (user.selectors.isLoggedIn() ? <Profile /> : <Login />)}
-              <Cart />
-            </div>
+            <TooltipProvider>
+              <div className="flex items-center gap-2">
+                {user.isReady &&
+                  (user.selectors.isLoggedIn() ? <Profile /> : <Login />)}
+                <Cart />
+              </div>
+            </TooltipProvider>
           </div>
           <div className="lg:hidden">
             <Search />
@@ -49,44 +57,57 @@ export default function Header() {
 }
 
 const Profile = () => {
-  const user = useKillua(userSlice);
-
   return (
-    <Link href="/profile">
-      <Button
-        variant="outline"
-        className="gap-1 hover:bg-primary hover:text-white py-5"
-      >
-        <UserIcon size={24} />
-        <p>{user.get()?.fullName}</p>
-      </Button>
-    </Link>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Link href="/profile">
+          <Button
+            variant="outline"
+            size="icon"
+            className="gap-1 hover:bg-primary hover:text-white py-5"
+          >
+            <UserIcon className="size-5" />
+          </Button>
+        </Link>
+      </TooltipTrigger>
+      <TooltipContent>پروفایل</TooltipContent>
+    </Tooltip>
   );
 };
 
 const Login = () => {
   return (
-    <Link href="/auth">
-      <Button
-        variant="outline"
-        className="gap-1 hover:bg-primary hover:text-white py-5"
-      >
-        <LogIn size={18} />
-        <p>ورود | ثبت نام</p>
-      </Button>
-    </Link>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Link href="/auth">
+          <Button
+            variant="outline"
+            size="icon"
+            className="gap-1 hover:bg-primary hover:text-white py-5"
+          >
+            <LogIn className="size-[18px]" />
+          </Button>
+        </Link>
+      </TooltipTrigger>
+      <TooltipContent>ورود به حساب کاربری</TooltipContent>
+    </Tooltip>
   );
 };
 
 const Cart = () => {
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      className="gap-1 hover:bg-primary hover:text-white py-5"
-    >
-      <ShoppingBag size={20} />
-    </Button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          variant="outline"
+          size="icon"
+          className="gap-1 hover:bg-primary hover:text-white py-5"
+        >
+          <ShoppingBag className="size-5" />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>سبد خرید</TooltipContent>
+    </Tooltip>
   );
 };
 
@@ -95,7 +116,7 @@ const Search = () => {
     <Dialog>
       <DialogTrigger asChild>
         <button className="flex items-center w-full lg:w-[400px] gap-2 border rounded-lg p-3">
-          <SearchIcon size={18} className="text-gray-400" />
+          <SearchIcon className="size-[18px] text-gray-400" />
           <p className="text-sm flex gap-1 text-gray-400">
             جستجو در{' '}
             <Image
@@ -112,7 +133,7 @@ const Search = () => {
           <DialogTitle>جستجو</DialogTitle>
         </DialogHeader>
         <div className="absolute top-3 right-3 left-3 focus-within:border-primary transition-all mr-8 lg:mr-8 flex items-center gap-2 border rounded-lg p-3 bg-white lg:mx-auto">
-          <SearchIcon size={18} className="text-gray-400 shrink-0" />
+          <SearchIcon className="size-[18px] text-gray-400 shrink-0" />
           <input
             placeholder="جستجو ..."
             className="text-sm flex-1 outline-none"
@@ -121,7 +142,7 @@ const Search = () => {
         <div className="mt-15 lg:mt-13">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-1 text-gray-700">
-              <Flame size={18} className="text-gray-400 size-5.5" />
+              <Flame className="text-gray-400 size-[18px]" />
               <h3 className="text-sm font-medium">جستجوهای پرطرفدار</h3>
             </div>
             <div className="flex items-center gap-2 flex-wrap">

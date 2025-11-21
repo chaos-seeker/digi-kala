@@ -74,12 +74,12 @@ export const HeroSlider = () => {
       </Swiper>
       <div className="hero-slider-prev absolute left-9 top-1/2 -translate-y-1/2 z-10 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="flex items-center justify-center w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors duration-300">
-          <ChevronLeft size={24} />
+          <ChevronLeft className="size-6" />
         </div>
       </div>
       <div className="hero-slider-next absolute right-9 top-1/2 -translate-y-1/2 z-10 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="flex items-center justify-center w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors duration-300">
-          <ChevronRight size={24} />
+          <ChevronRight className="size-6" />
         </div>
       </div>
       <div className="hero-slider-pagination absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2"></div>

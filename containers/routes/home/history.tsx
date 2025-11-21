@@ -191,7 +191,7 @@ export const History = () => {
     <section className="container">
       <div className="border p-4 rounded-xl flex flex-col items-center justify-center gap-6 relative group">
         <div className="flex items-center gap-2">
-          <HistoryIcon size={24} className="text-yellow-500" />
+          <HistoryIcon className="size-6 text-yellow-500" />
           <h2 className="font-medium">بر اساس سلیقه شما</h2>
         </div>
         <div className="xl:hidden w-full">
@@ -244,7 +244,7 @@ export const History = () => {
                         className="flex items-center gap-1 text-primary text-sm font-medium hover:text-primary/80 transition-colors"
                       >
                         <span>مشاهده</span>
-                        <ChevronLeft size={16} />
+                        <ChevronLeft className="size-4" />
                       </Link>
                     </div>
                     <div className="grid grid-cols-2">
@@ -279,7 +279,7 @@ export const History = () => {
                 onClick={() => swiperRef.current?.slideNext()}
               >
                 <div className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-300">
-                  <ChevronLeft size={20} />
+                  <ChevronLeft className="size-5" />
                 </div>
               </div>
             )}
@@ -289,7 +289,7 @@ export const History = () => {
                 onClick={() => swiperRef.current?.slidePrev()}
               >
                 <div className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-300">
-                  <ChevronRight size={20} />
+                  <ChevronRight className="size-5" />
                 </div>
               </div>
             )}
@@ -315,7 +315,7 @@ export const History = () => {
                   className="flex items-center gap-1 text-primary text-sm font-medium hover:text-primary/80 transition-colors"
                 >
                   <span>مشاهده</span>
-                  <ChevronLeft size={16} />
+                  <ChevronLeft className="size-4" />
                 </Link>
               </div>
               <div className="grid grid-cols-2">

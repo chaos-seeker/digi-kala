@@ -218,7 +218,7 @@ export const Amazing = () => {
                     <span className="text-white text-xs font-medium">
                       مشاهده همه
                     </span>
-                    <ChevronLeft size={16} className="text-white" />
+                    <ChevronLeft className="size-4 text-white" />
                   </button>
                 </div>
               </div>
@@ -240,14 +240,14 @@ export const Amazing = () => {
             className={`amazing-slider-next absolute left-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer transition-opacity duration-300 ${isEnd ? 'opacity-0 pointer-events-none' : 'opacity-0 group-hover:opacity-100'}`}
           >
             <div className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-300">
-              <ChevronLeft size={20} />
+              <ChevronLeft className="size-5" />
             </div>
           </div>
           <div
             className={`amazing-slider-prev absolute right-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer transition-opacity duration-300 ${isBeginning ? 'opacity-0 pointer-events-none' : 'opacity-0 group-hover:opacity-100'}`}
           >
             <div className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-300">
-              <ChevronRight size={20} />
+              <ChevronRight className="size-5" />
             </div>
           </div>
         </div>

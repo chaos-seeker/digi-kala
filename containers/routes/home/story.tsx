@@ -245,7 +245,7 @@ export const Story = () => {
         }}
         className="flex items-center justify-center size-8 bg-black/70 rounded-full text-white hover:bg-black/90 transition-colors shadow-lg"
       >
-        <X size={20} />
+        <X className="size-5" />
       </button>
     </div>
   );
@@ -265,7 +265,7 @@ export const Story = () => {
           }`}
           disabled={isLastStory}
         >
-          <ArrowRight size={20} className="rotate-180" />
+          <ArrowRight className="size-5 rotate-180" />
         </button>
       </div>
 
@@ -282,7 +282,7 @@ export const Story = () => {
           }`}
           disabled={isFirstStory}
         >
-          <ArrowRight size={20} />
+          <ArrowRight className="size-5" />
         </button>
       </div>
     </>

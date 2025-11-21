@@ -1,14 +1,13 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { LayoutGrid, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import { useState, useRef } from 'react';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { ChevronLeft, ChevronRight, LayoutGrid } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRef, useState } from 'react';
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 type Category = {
   id: string;
@@ -137,7 +136,7 @@ export const Categories = () => {
     <section className="container">
       <div className="border rounded-xl p-4 flex flex-col gap-6 items-center justify-center relative group">
         <div className="flex items-center gap-2">
-          <LayoutGrid size={24} className="text-yellow-500" />
+          <LayoutGrid className="size-6 text-yellow-500" />
           <h2 className="font-medium">خرید بر اساس دسته‌بندی</h2>
         </div>
         <div className="lg:hidden w-full">
@@ -171,7 +170,7 @@ export const Categories = () => {
               className="categories-swiper"
             >
               {categories.map((category) => (
-                <SwiperSlide key={category.id} className="!w-auto">
+                <SwiperSlide key={category.id} className="w-auto!">
                   <Link
                     href={category.href}
                     className="flex flex-col items-center"
@@ -197,7 +196,7 @@ export const Categories = () => {
                 onClick={() => swiperRef.current?.slideNext()}
               >
                 <div className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-300">
-                  <ChevronLeft size={20} />
+                  <ChevronLeft className="size-5" />
                 </div>
               </div>
             )}
@@ -207,7 +206,7 @@ export const Categories = () => {
                 onClick={() => swiperRef.current?.slidePrev()}
               >
                 <div className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-300">
-                  <ChevronRight size={20} />
+                  <ChevronRight className="size-5" />
                 </div>
               </div>
             )}
@@ -220,7 +219,7 @@ export const Categories = () => {
               href={category.href}
               className="flex flex-col items-center"
             >
-              <div className="relative w-16 h-16 sm:w-24 sm:h-24 mb-2 overflow-hidden duration-300">
+              <div className="relative w-26 h-26 mb-2 overflow-hidden duration-300">
                 <Image
                   src={category.image}
                   alt={category.title}

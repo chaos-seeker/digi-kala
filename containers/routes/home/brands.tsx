@@ -103,7 +103,7 @@ export const Brands = () => {
     <section className="container">
       <div className="border rounded-xl pr-5 border-gray-200 py-6 relative group">
         <div className="flex items-center justify-center gap-2 mb-6">
-          <Star size={24} className="text-yellow-500" />
+          <Star className="size-6 text-yellow-500" />
           <h2 className="font-medium">محبوب‌ترین برندها</h2>
         </div>
         <div className="relative">
@@ -167,7 +167,7 @@ export const Brands = () => {
               onClick={() => swiperRef.current?.slideNext()}
             >
               <div className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-300">
-                <ChevronLeft size={20} />
+                <ChevronLeft className="size-5" />
               </div>
             </div>
           )}
@@ -177,7 +177,7 @@ export const Brands = () => {
               onClick={() => swiperRef.current?.slidePrev()}
             >
               <div className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-300">
-                <ChevronRight size={20} />
+                <ChevronRight className="size-5" />
               </div>
             </div>
           )}
