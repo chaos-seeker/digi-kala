@@ -2,9 +2,15 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { LogIn, SearchIcon } from 'lucide-react';
+import { LogIn, SearchIcon, Flame } from 'lucide-react';
 import { Button } from '@/ui/button';
-import { DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog } from '@/ui/dialog';
+import {
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  Dialog,
+} from '@/ui/dialog';
 
 export default function Header() {
   return (
@@ -61,8 +67,33 @@ const Search = () => {
           </p>
         </button>
       </DialogTrigger>
-      <DialogContent>
-
+      <DialogContent className="[&>button]:mt-2">
+        <div className="absolute top-3 right-3 left-3 focus-within:border-primary transition-all mr-8 lg:mr-8 flex items-center gap-2 border rounded-lg p-3 bg-white lg:mx-auto">
+          <SearchIcon size={18} className="text-gray-400 shrink-0" />
+          <input
+            placeholder="جستجو ..."
+            className="text-sm flex-1 outline-none"
+          />
+        </div>
+        <div className="mt-15 lg:mt-13">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-1 text-gray-700">
+              <Flame size={18} className="text-gray-400 size-5.5" />
+              <h3 className="text-sm font-medium">جستجوهای پرطرفدار</h3>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              {['شارژر', 'موس', 'ساعت', 'هندزفری'].map((item) => (
+                <Link
+                  key={item}
+                  href={`/explore?q=${encodeURIComponent(item)}`}
+                  className="px-3.5 py-1.5 rounded-full border text-sm text-gray-700 hover:bg-primary hover:text-white"
+                >
+                  {item}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   );
