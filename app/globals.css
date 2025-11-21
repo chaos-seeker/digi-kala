@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -7,7 +7,7 @@
   --text-xsp: 13px;
   --text-smp: 15px;
   --text-mdp: 17px;
-  --default-transition-duration: 0.30s;
+  --default-transition-duration: 0.3s;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
