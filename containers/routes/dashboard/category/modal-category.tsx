@@ -1,7 +1,8 @@
 'use client';
 
+import { regex } from '@/constants/regex';
 import { trpc } from '@/lib/trpc';
-import { THeroSlider } from '@/types/hero-slider';
+import { TCategory } from '@/types/category';
 import { Button } from '@/ui/button';
 import {
   Dialog,
@@ -24,50 +25,53 @@ const formSchema = z.object({
   image: z.union([z.instanceof(File), z.string().min(1)], {
     message: 'تصویر الزامی است',
   }),
-  link: z
+  title: z
     .string()
-    .min(1, 'لینک الزامی است')
-    .refine((val) => val.startsWith('/'), {
-      message: 'لینک باید با / شروع شود',
-    }),
+    .min(1, 'عنوان الزامی است')
+    .regex(regex.persian, 'عنوان باید فارسی باشد'),
+  slug: z
+    .string()
+    .min(1, 'اسلاگ الزامی است')
+    .regex(regex.slug, 'اسلاگ باید انگلیسی و بدون اسپیس باشد'),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
-interface ModalHeroSliderProps {
+interface ModalCategoryProps {
   children: React.ReactNode;
   mode: 'add' | 'edit';
-  slider?: THeroSlider;
+  category?: TCategory;
   onSuccess?: () => void;
 }
 
-export function ModalHeroSlider({
+export function ModalCategory({
   children,
   mode,
-  slider,
+  category,
   onSuccess,
-}: ModalHeroSliderProps) {
+}: ModalCategoryProps) {
   const [open, setOpen] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(
-    mode === 'edit' && slider ? slider.image : null,
+    mode === 'edit' && category ? category.image : null,
   );
   const utils = trpc.useUtils();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      image: mode === 'edit' && slider ? slider.image : undefined,
-      link: mode === 'edit' && slider ? slider.link : '',
+      image: mode === 'edit' && category ? category.image : undefined,
+      title: mode === 'edit' && category ? category.title : '',
+      slug: mode === 'edit' && category ? category.slug : '',
     },
   });
 
-  const createMutation = trpc.heroSlider.create.useMutation({
+  const createMutation = trpc.category.create.useMutation({
     onSuccess: (data) => {
       toast.success(data.message);
       form.reset();
       setImagePreview(null);
       setOpen(false);
-      utils.heroSlider.getAll.invalidate();
+      utils.category.getAll.invalidate();
       onSuccess?.();
     },
     onError: (error) => {
@@ -75,12 +79,12 @@ export function ModalHeroSlider({
     },
   });
 
-  const editMutation = trpc.heroSlider.edit.useMutation({
+  const editMutation = trpc.category.edit.useMutation({
     onSuccess: (data: { success: boolean; message: string }) => {
       toast.success(data.message);
       form.reset();
       setOpen(false);
-      utils.heroSlider.getAll.invalidate();
+      utils.category.getAll.invalidate();
       onSuccess?.();
     },
     onError: (error: { message: string }) => {
@@ -100,79 +104,77 @@ export function ModalHeroSlider({
     }
   };
 
-  const handleSubmit = async (data: FormData) => {
-    if (mode === 'add') {
-      if (data.image instanceof File) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64Image = reader.result as string;
-          createMutation.mutate({
-            image: base64Image,
-            link: data.link,
-          });
-        };
-        reader.readAsDataURL(data.image);
-      }
-    } else {
-      if (!slider) return;
-
-      if (data.image instanceof File) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64Image = reader.result as string;
-          editMutation.mutate({
-            id: slider.id,
-            image: base64Image,
-            link: data.link,
-          });
-        };
-        reader.readAsDataURL(data.image);
-      } else {
-        editMutation.mutate({
-          id: slider.id,
-          image: data.image,
-          link: data.link,
-        });
-      }
-    }
+  const convertFileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.readAsDataURL(file);
+    });
   };
 
-  useEffect(() => {
-    if (mode === 'edit' && slider) {
-      form.reset({
-        image: slider.image,
-        link: slider.link,
-      });
-      setImagePreview(slider.image);
-    } else {
-      form.reset({
-        image: undefined,
-        link: '',
-      });
-      setImagePreview(null);
-    }
-  }, [slider, mode, form]);
+  const handleSubmit = async (data: FormData) => {
+    const imageData =
+      data.image instanceof File
+        ? await convertFileToBase64(data.image)
+        : data.image;
 
-  const isLoading = createMutation.isPending || editMutation.isPending;
+    if (mode === 'add') {
+      createMutation.mutate({
+        image: imageData,
+        title: data.title,
+        slug: data.slug,
+      });
+    } else {
+      if (!category) return;
+      editMutation.mutate({
+        id: category.id,
+        image: imageData,
+        title: data.title,
+        slug: data.slug,
+      });
+    }
+  };
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
     if (!newOpen) {
-      if (mode === 'edit' && slider) {
+      if (mode === 'edit' && category) {
         form.reset({
-          image: slider.image,
-          link: slider.link,
+          image: category.image,
+          title: category.title,
+          slug: category.slug,
         });
-        setImagePreview(slider.image);
+        setImagePreview(category.image);
       } else {
         form.reset({
           image: undefined,
-          link: '',
+          title: '',
+          slug: '',
         });
         setImagePreview(null);
       }
     }
   };
+
+  useEffect(() => {
+    if (mode === 'edit' && category) {
+      form.reset({
+        image: category.image,
+        title: category.title,
+        slug: category.slug,
+      });
+      setImagePreview(category.image);
+    } else {
+      form.reset({
+        image: undefined,
+        title: '',
+        slug: '',
+      });
+      setImagePreview(null);
+    }
+  }, [category, mode, form]);
+
+  const isLoading = createMutation.isPending || editMutation.isPending;
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -180,7 +182,7 @@ export function ModalHeroSlider({
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>
-            {mode === 'add' ? 'افزودن اسلایدر' : 'ویرایش اسلایدر'}
+            {mode === 'add' ? 'افزودن دسته‌بندی' : 'ویرایش دسته‌بندی'}
           </DialogTitle>
         </DialogHeader>
         <form
@@ -201,11 +203,23 @@ export function ModalHeroSlider({
           />
           <Controller
             control={form.control}
-            name="link"
+            name="title"
             render={({ field, fieldState }) => (
               <Input
                 type="text"
-                label="لینک"
+                label="عنوان"
+                error={fieldState.error?.message}
+                {...field}
+              />
+            )}
+          />
+          <Controller
+            control={form.control}
+            name="slug"
+            render={({ field, fieldState }) => (
+              <Input
+                type="text"
+                label="اسلاگ"
                 error={fieldState.error?.message}
                 {...field}
               />

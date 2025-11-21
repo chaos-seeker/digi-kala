@@ -131,13 +131,15 @@ export function ModalStory({
   };
 
   const handleSubmit = async (data: FormData) => {
-    const avatarData = data.avatar instanceof File 
-      ? await convertFileToBase64(data.avatar) 
-      : data.avatar;
-    
-    const coverData = data.cover instanceof File 
-      ? await convertFileToBase64(data.cover) 
-      : data.cover;
+    const avatarData =
+      data.avatar instanceof File
+        ? await convertFileToBase64(data.avatar)
+        : data.avatar;
+
+    const coverData =
+      data.cover instanceof File
+        ? await convertFileToBase64(data.cover)
+        : data.cover;
 
     if (mode === 'add') {
       createMutation.mutate({
@@ -213,7 +215,7 @@ export function ModalStory({
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>
-            {mode === 'add' ? 'افزودن استوری جدید' : 'ویرایش استوری'}
+            {mode === 'add' ? 'افزودن استوری' : 'ویرایش استوری'}
           </DialogTitle>
         </DialogHeader>
         <form

@@ -40,3 +40,14 @@ model Story {
   @@map("stories")
 }
 
+model Category {
+  id        String   @id @default(cuid())
+  title     String
+  image     String
+  slug      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("categories")
+}
+

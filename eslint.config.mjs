@@ -82,12 +82,6 @@ export default [
       'better-tailwindcss/no-unnecessary-whitespace': 'warn',
       'better-tailwindcss/no-duplicate-classes': 'warn',
       'better-tailwindcss/enforce-consistent-variable-syntax': 'warn',
-      'better-tailwindcss/no-unregistered-classes': [
-        'error',
-        {
-          ignore: ['^_', 'pagination', 'scrollbar-hide', 'show', 'hide'],
-        },
-      ],
 
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
