@@ -1,4 +1,8 @@
 import { authenticate } from './auth/authenticate';
+import { create as createBrand } from './brand/create';
+import { deleteBrand } from './brand/delete';
+import { edit as editBrand } from './brand/edit';
+import { getAll as getAllBrands } from './brand/get-all';
 import { create as createCategory } from './category/create';
 import { deleteCategory } from './category/delete';
 import { edit as editCategory } from './category/edit';
@@ -34,6 +38,12 @@ export const appRouter = router({
     create: createCategory,
     edit: editCategory,
     delete: deleteCategory,
+  }),
+  brand: router({
+    getAll: getAllBrands,
+    create: createBrand,
+    edit: editBrand,
+    delete: deleteBrand,
   }),
 });
 

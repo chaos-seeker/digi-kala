@@ -11,11 +11,13 @@ import { createContext } from '@/server/context';
 
 export default async function Page() {
   const caller = appRouter.createCaller(await createContext());
-  const [heroSlidersData, storiesData, categoriesData] = await Promise.all([
-    caller.heroSlider.getAll(),
-    caller.story.getAll(),
-    caller.category.getAll(),
-  ]);
+  const [heroSlidersData, storiesData, categoriesData, brandsData] =
+    await Promise.all([
+      caller.heroSlider.getAll(),
+      caller.story.getAll(),
+      caller.category.getAll(),
+      caller.brand.getAll(),
+    ]);
 
   return (
     <>
@@ -24,7 +26,7 @@ export default async function Page() {
       <Amazing />
       <Categories data={categoriesData} />
       <TwoBanner />
-      <Brands />
+      <Brands data={brandsData} />
       <FourBanner />
       <History />
     </>

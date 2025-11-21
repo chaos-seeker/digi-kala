@@ -31,9 +31,10 @@ export const Categories = (props: CategoriesProps) => {
             <Swiper
               modules={[Navigation]}
               spaceBetween={16}
-              slidesPerView={1.5}
+              slidesPerView="auto"
               dir="rtl"
               watchSlidesProgress={true}
+              slidesPerGroup={1}
               navigation={{
                 nextEl: '.categories-slider-next',
                 prevEl: '.categories-slider-prev',
@@ -57,9 +58,9 @@ export const Categories = (props: CategoriesProps) => {
               className="categories-swiper"
             >
               {props.data?.map((category) => (
-                <SwiperSlide key={category.id} className="w-auto!">
+                <SwiperSlide key={category.id} className="!w-auto">
                   <Link
-                    href={`/category/${category.slug}`}
+                    href={`/explore`}
                     className="flex flex-col items-center"
                   >
                     <div className="relative w-24 h-24 mb-2 overflow-hidden duration-300">

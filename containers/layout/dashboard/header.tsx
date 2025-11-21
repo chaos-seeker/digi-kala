@@ -1,5 +1,6 @@
 'use client';
 
+import { ModalBrand } from '@/containers/routes/dashboard/brand/modal-brand';
 import { ModalCategory } from '@/containers/routes/dashboard/category/modal-category';
 import { ModalHeroSlider } from '@/containers/routes/dashboard/hero-slider/modal-hero-slider';
 import { ModalStory } from '@/containers/routes/dashboard/story/modal-story';
@@ -32,6 +33,7 @@ export default function Header() {
               />
             </Link>
             <div className="flex items-center gap-2">
+              <AddBrandBtn />
               <AddCategoryBtn />
               <AddStoryBtn />
               <AddHeroSliderBtn />
@@ -150,5 +152,24 @@ const AddCategoryBtn = () => {
         <span>افزودن دسته‌بندی</span>
       </Button>
     </ModalCategory>
+  );
+};
+
+const AddBrandBtn = () => {
+  const pathname = usePathname();
+  const isShow = pathname === '/dashboard/brand';
+
+  if (!isShow) return null;
+
+  return (
+    <ModalBrand mode="add">
+      <Button
+        variant="outline"
+        className="gap-1 hover:bg-primary hover:text-white py-5"
+      >
+        <Plus className="size-5" />
+        <span>افزودن برند</span>
+      </Button>
+    </ModalBrand>
   );
 };
