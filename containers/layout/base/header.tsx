@@ -1,18 +1,22 @@
 'use client';
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { LogIn, SearchIcon, Flame, ShoppingBag } from 'lucide-react';
+import { userSlice } from '@/slices/user';
 import { Button } from '@/ui/button';
 import {
+  Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  Dialog,
 } from '@/ui/dialog';
+import { useKillua } from 'killua';
+import { Flame, LogIn, SearchIcon, ShoppingBag, UserIcon } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Header() {
+  const user = useKillua(userSlice);
+
   return (
     <header>
       <div className="container">
@@ -30,7 +34,8 @@ export default function Header() {
               <Search />
             </div>
             <div className="flex items-center gap-2">
-              <Login />
+              {user.isReady &&
+                (user.selectors.isLoggedIn() ? <Profile /> : <Login />)}
               <Cart />
             </div>
           </div>
@@ -43,15 +48,33 @@ export default function Header() {
   );
 }
 
+const Profile = () => {
+  const user = useKillua(userSlice);
+
+  return (
+    <Link href="/profile">
+      <Button
+        variant="outline"
+        className="gap-1 hover:bg-primary hover:text-white py-5"
+      >
+        <UserIcon size={24} />
+        <p>{user.get()?.fullName}</p>
+      </Button>
+    </Link>
+  );
+};
+
 const Login = () => {
   return (
-    <Button
-      variant="outline"
-      className="gap-1 hover:bg-primary hover:text-white py-5"
-    >
-      <LogIn size={18} />
-      <p>ورود | ثبت نام</p>
-    </Button>
+    <Link href="/auth">
+      <Button
+        variant="outline"
+        className="gap-1 hover:bg-primary hover:text-white py-5"
+      >
+        <LogIn size={18} />
+        <p>ورود | ثبت نام</p>
+      </Button>
+    </Link>
   );
 };
 

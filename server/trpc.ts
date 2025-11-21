@@ -1,11 +1,11 @@
-import type { PrismaClient } from '@prisma/client';
 import { initTRPC } from '@trpc/server';
 
 export interface Context {
-  prisma: PrismaClient;
+  prisma: any;
 }
 
 const t = initTRPC.context<Context>().create();
 
 export const router = t.router;
 export const publicProcedure = t.procedure;
+

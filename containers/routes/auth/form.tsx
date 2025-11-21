@@ -2,9 +2,11 @@
 
 import { regex } from '@/constants/regex';
 import { trpc } from '@/lib/trpc';
+import { userSlice } from '@/slices/user';
 import { Button } from '@/ui/button';
 import { Input } from '@/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useKillua } from 'killua';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -37,17 +39,18 @@ export function Form() {
       password: '',
     },
   });
-
+  const user = useKillua(userSlice);
   const authMutation = trpc.auth.authenticate.useMutation({
     onSuccess: (data) => {
+      user.set(data.user);
       toast.success(data.message);
+      form.reset();
       router.push('/');
     },
     onError: (error) => {
       toast.error(error.message);
     },
   });
-
   const handleSubmitForm = async (data: z.infer<typeof formSchema>) => {
     authMutation.mutate({
       username: data.username,

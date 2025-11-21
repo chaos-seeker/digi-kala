@@ -14,7 +14,6 @@ export const authRouter = router({
       const existingUser = await ctx.prisma.user.findUnique({
         where: { username: input.username },
       });
-
       if (!existingUser) {
         const newUser = await ctx.prisma.user.create({
           data: {
@@ -23,7 +22,6 @@ export const authRouter = router({
             fullName: input.fullName,
           },
         });
-
         return {
           success: true,
           message: 'حساب کاربری با موفقیت ایجاد شد',
@@ -34,14 +32,12 @@ export const authRouter = router({
           },
         };
       }
-
       if (
         existingUser.password !== input.password ||
         existingUser.fullName !== input.fullName
       ) {
-        throw new Error('نام کاربری، رمز عبور یا نام کامل اشتباه است');
+        throw new Error('رمز عبور یا نام و نام خانوادگی اشتباه است');
       }
-
       return {
         success: true,
         message: 'ورود با موفقیت انجام شد',
