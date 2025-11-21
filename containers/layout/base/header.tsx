@@ -15,23 +15,25 @@ import {
 export default function Header() {
   return (
     <header>
-      <div className="container border mt-4 rounded-xl py-3 flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <Link href="/">
-            <Image
-              src="images/layout/logo.svg"
-              alt="logo"
-              width={150}
-              height={150}
-            />
-          </Link>
-          <div className="hidden lg:block">
+      <div className="container">
+        <div className="border mt-4 rounded-xl p-3 flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <Link href="/">
+              <Image
+                src="images/layout/logo.svg"
+                alt="logo"
+                width={150}
+                height={150}
+              />
+            </Link>
+            <div className="hidden lg:block">
+              <Search />
+            </div>
+            <Login />
+          </div>
+          <div className="lg:hidden">
             <Search />
           </div>
-          <Login />
-        </div>
-        <div className="lg:hidden">
-          <Search />
         </div>
       </div>
     </header>
@@ -68,6 +70,9 @@ const Search = () => {
         </button>
       </DialogTrigger>
       <DialogContent className="[&>button]:mt-2">
+        <DialogHeader className="sr-only">
+          <DialogTitle>جستجو</DialogTitle>
+        </DialogHeader>
         <div className="absolute top-3 right-3 left-3 focus-within:border-primary transition-all mr-8 lg:mr-8 flex items-center gap-2 border rounded-lg p-3 bg-white lg:mx-auto">
           <SearchIcon size={18} className="text-gray-400 shrink-0" />
           <input
