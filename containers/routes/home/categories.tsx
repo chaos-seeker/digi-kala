@@ -2,7 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { LayoutGrid } from 'lucide-react';
+import { LayoutGrid, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import { useState, useRef } from 'react';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 type Category = {
   id: string;
@@ -123,14 +129,91 @@ const categories: Category[] = [
 ];
 
 export const Categories = () => {
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+  const swiperRef = useRef<any>(null);
+
   return (
     <section className="container">
-      <div className="border rounded-xl p-4 flex flex-col gap-6 items-center justify-center">
+      <div className="border rounded-xl p-4 flex flex-col gap-6 items-center justify-center relative group">
         <div className="flex items-center gap-2">
           <LayoutGrid size={24} className="text-yellow-500" />
           <h2 className="font-medium">خرید بر اساس دسته‌بندی</h2>
         </div>
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-4">
+        <div className="lg:hidden w-full">
+          <div className="relative">
+            <Swiper
+              modules={[Navigation]}
+              spaceBetween={16}
+              slidesPerView="auto"
+              dir="rtl"
+              watchSlidesProgress={true}
+              navigation={{
+                nextEl: '.categories-slider-next',
+                prevEl: '.categories-slider-prev',
+                enabled: true,
+              }}
+              onSlideChange={(swiper) => {
+                setIsBeginning(swiper.isBeginning);
+                setIsEnd(swiper.isEnd);
+              }}
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
+                setIsBeginning(swiper.isBeginning);
+                setIsEnd(swiper.isEnd);
+              }}
+              onReachEnd={() => {
+                setIsEnd(true);
+              }}
+              onReachBeginning={() => {
+                setIsBeginning(true);
+              }}
+              className="categories-swiper"
+            >
+              {categories.map((category) => (
+                <SwiperSlide key={category.id} className="!w-auto">
+                  <Link
+                    href={category.href}
+                    className="flex flex-col items-center group"
+                  >
+                    <div className="relative w-16 h-16 sm:w-24 sm:h-24 mb-2 overflow-hidden duration-300">
+                      <Image
+                        src={category.image}
+                        alt={category.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <span className="text-xs font-medium text-center text-gray-700 leading-tight">
+                      {category.title}
+                    </span>
+                  </Link>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            {!isEnd && (
+              <div
+                className="categories-slider-next absolute left-0 top-1/2 -translate-y-1/2 z-10 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                onClick={() => swiperRef.current?.slideNext()}
+              >
+                <div className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-300">
+                  <ChevronLeft size={20} />
+                </div>
+              </div>
+            )}
+            {!isBeginning && (
+              <div
+                className="categories-slider-prev absolute right-0 top-1/2 -translate-y-1/2 z-10 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                onClick={() => swiperRef.current?.slidePrev()}
+              >
+                <div className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-300">
+                  <ChevronRight size={20} />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="hidden lg:grid grid-cols-9 gap-4">
           {categories.map((category) => (
             <Link
               key={category.id}
@@ -145,7 +228,7 @@ export const Categories = () => {
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <span className="text-xsp font-medium text-center text-gray-700 leading-tight">
+              <span className="text-xs font-medium text-center text-gray-700 leading-tight">
                 {category.title}
               </span>
             </Link>
