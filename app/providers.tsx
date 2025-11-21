@@ -1,6 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
+import { TooltipProvider } from '@/ui/tooltip';
 import { ProgressProvider } from '@bprogress/next/app';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
@@ -56,6 +57,10 @@ const Nuqs = (props: PropsWithChildren) => {
   return <NuqsAdapter>{props.children}</NuqsAdapter>;
 };
 
+const Tooltip = (props: PropsWithChildren) => {
+  return <TooltipProvider>{props.children}</TooltipProvider>;
+};
+
 const HotToast = () => {
   return <Toaster position="top-center" containerClassName="toaster-wrapper" />;
 };
@@ -66,10 +71,12 @@ export const Providers = (props: PropsWithChildren) => {
       <Bprogress>
         <ReactQuery>
           <Nuqs>
-            <Suspense>
-              <HotToast />
-              {props.children}
-            </Suspense>
+            <Tooltip>
+              <Suspense>
+                <HotToast />
+                {props.children}
+              </Suspense>
+            </Tooltip>
           </Nuqs>
         </ReactQuery>
       </Bprogress>

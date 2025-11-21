@@ -9,14 +9,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/ui/dialog';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/ui/tooltip';
 import { useKillua } from 'killua';
-import { Flame, LogIn, SearchIcon, ShoppingBag, UserIcon } from 'lucide-react';
+import {
+  Flame,
+  LayoutGrid,
+  SearchIcon,
+  ShoppingBag,
+  UserIcon,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -39,13 +40,12 @@ export default function Header() {
             <div className="hidden lg:block">
               <Search />
             </div>
-            <TooltipProvider>
-              <div className="flex items-center gap-2">
-                {user.isReady &&
-                  (user.selectors.isLoggedIn() ? <Profile /> : <Login />)}
-                <Cart />
-              </div>
-            </TooltipProvider>
+            <div className="flex items-center gap-2">
+              {user.isReady &&
+                (user.selectors.isLoggedIn() ? <Profile /> : <Login />)}
+              <Cart />
+              <Dashboard />
+            </div>
           </div>
           <div className="lg:hidden">
             <Search />
@@ -75,6 +75,25 @@ const Profile = () => {
   );
 };
 
+const Dashboard = () => {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Link href="/dashboard">
+          <Button
+            variant="outline"
+            size="icon"
+            className="gap-1 hover:bg-primary hover:text-white py-5"
+          >
+            <LayoutGrid className="size-5" />
+          </Button>
+        </Link>
+      </TooltipTrigger>
+      <TooltipContent>داشبورد</TooltipContent>
+    </Tooltip>
+  );
+};
+
 const Login = () => {
   return (
     <Tooltip>
@@ -85,7 +104,7 @@ const Login = () => {
             size="icon"
             className="gap-1 hover:bg-primary hover:text-white py-5"
           >
-            <LogIn className="size-[18px]" />
+            <UserIcon className="size-5" />
           </Button>
         </Link>
       </TooltipTrigger>
