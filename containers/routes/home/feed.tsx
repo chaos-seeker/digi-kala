@@ -319,7 +319,7 @@ export const Feed = () => {
 
   return (
     <section className="w-full container">
-      <div className="flex gap-6 overflow-x-auto pb-2 px-4 scroll-smooth snap-x snap-mandatory [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb:hover]:bg-gray-400">
+      <div className="flex gap-6 overflow-x-auto pb-0.5 px-4 scroll-smooth snap-x snap-mandatory [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb:hover]:bg-gray-400">
         <div className="flex gap-6 mx-auto">
           {stories.map((story, index) => (
             <button
