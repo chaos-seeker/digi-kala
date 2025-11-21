@@ -6,11 +6,11 @@ import type { PropsWithChildren } from 'react';
 
 export default function Layout(props: PropsWithChildren) {
   const pathname = usePathname();
-  const isBase = !pathname?.includes('/dashboard');
+  const isAuth = pathname?.includes('/auth');
 
-  return (
-    <div>
-      {isBase && <LayoutBase>{props.children}</LayoutBase>}
-    </div>
-  );
+  if (isAuth) {
+    return props.children;
+  }
+
+  return <LayoutBase>{props.children}</LayoutBase>;
 }

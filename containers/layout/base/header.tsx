@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { LogIn, SearchIcon, Flame } from 'lucide-react';
+import { LogIn, SearchIcon, Flame, ShoppingBag } from 'lucide-react';
 import { Button } from '@/ui/button';
 import {
   DialogContent,
@@ -29,7 +29,10 @@ export default function Header() {
             <div className="hidden lg:block">
               <Search />
             </div>
-            <Login />
+            <div className="flex items-center gap-2">
+              <Login />
+              <Cart />
+            </div>
           </div>
           <div className="lg:hidden">
             <Search />
@@ -48,6 +51,18 @@ const Login = () => {
     >
       <LogIn size={18} />
       <p>ورود | ثبت نام</p>
+    </Button>
+  );
+};
+
+const Cart = () => {
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      className="gap-1 hover:bg-primary hover:text-white py-5"
+    >
+      <ShoppingBag size={20} />
     </Button>
   );
 };

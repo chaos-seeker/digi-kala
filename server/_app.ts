@@ -1,6 +1,8 @@
-import { createTRPCRouter } from './trpc';
+import { authRouter } from './routers/auth';
+import { router } from './trpc';
 
-export const appRouter = createTRPCRouter({});
+export const appRouter = router({
+  auth: authRouter,
+});
 
 export type AppRouter = typeof appRouter;
-

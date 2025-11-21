@@ -7,7 +7,7 @@ import { History } from '@/containers/routes/home/history';
 import { TwoBanner } from '@/containers/routes/home/two-banner';
 import { FourBanner } from '@/containers/routes/home/four-banner';
 
-export default function Home() {
+export default function Page() {
   return (
     <>
       <Story />

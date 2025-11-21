@@ -1,10 +1,11 @@
+import type { PrismaClient } from '@prisma/client';
 import { initTRPC } from '@trpc/server';
-import superjson from 'superjson';
 
-const t = initTRPC.context().create({
-  transformer: superjson,
-});
+export interface Context {
+  prisma: PrismaClient;
+}
 
-export const createTRPCRouter = t.router;
+const t = initTRPC.context<Context>().create();
+
+export const router = t.router;
 export const publicProcedure = t.procedure;
-

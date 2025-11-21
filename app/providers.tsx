@@ -1,10 +1,11 @@
 'use client';
 
-import { trpc, trpcClient } from '@/utils/trpc';
+import { trpc } from '@/lib/trpc';
 import { ProgressProvider } from '@bprogress/next/app';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { httpBatchLink } from '@trpc/client';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
-import { PropsWithChildren, Suspense } from 'react';
+import { PropsWithChildren, Suspense, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 const Bprogress = (props: PropsWithChildren) => {
@@ -20,21 +21,34 @@ const Bprogress = (props: PropsWithChildren) => {
   );
 };
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: Infinity,
-    },
-  },
-});
-
 const ReactQuery = (props: PropsWithChildren) => {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: Infinity,
+          },
+        },
+      }),
+  );
+
+  const [trpcClient] = useState(() =>
+    trpc.createClient({
+      links: [
+        httpBatchLink({
+          url: '/api/trpc',
+        }),
+      ],
+    }),
+  );
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <trpc.Provider client={trpcClient} queryClient={queryClient}>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
         {props.children}
-      </trpc.Provider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </trpc.Provider>
   );
 };
 
