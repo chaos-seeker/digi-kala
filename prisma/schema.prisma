@@ -18,3 +18,13 @@ model User {
   @@map("users")
 }
 
+model HeroSlider {
+  id        String   @id @default(cuid())
+  image     String
+  link      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("hero-slider")
+}
+

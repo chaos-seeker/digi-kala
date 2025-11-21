@@ -1,5 +1,6 @@
 'use client';
 
+import { ModalAddHeroSlider } from '@/containers/routes/dashboard/hero-slider/modal-add-hero-slider';
 import { Button } from '@/ui/button';
 import {
   DropdownMenu,
@@ -9,7 +10,7 @@ import {
 } from '@/ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/ui/tooltip';
 import { cn } from '@/utils/cn';
-import { LayoutGrid } from 'lucide-react';
+import { LayoutGrid, Plus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -22,13 +23,16 @@ export default function Header() {
           <div className="flex items-center justify-between">
             <Link href="/">
               <Image
-                src="images/layout/logo.svg"
+                src="/images/layout/logo.svg"
                 alt="logo"
                 width={130}
                 height={130}
               />
             </Link>
-            <QuickAccess />
+            <div className="flex items-center gap-2">
+              <AddHeroSliderBtn />
+              <QuickAccess />
+            </div>
           </div>
         </div>
       </div>
@@ -84,5 +88,19 @@ const QuickAccess = () => {
         })}
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+};
+
+const AddHeroSliderBtn = () => {
+  return (
+    <ModalAddHeroSlider>
+      <Button
+        variant="outline"
+        className="gap-1 hover:bg-primary hover:text-white py-5"
+      >
+        <Plus className="size-5" />
+        <span>افزودن هیرو اسلایدر</span>
+      </Button>
+    </ModalAddHeroSlider>
   );
 };
