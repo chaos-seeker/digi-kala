@@ -1,8 +1,8 @@
 'use client';
 
-import { ModalHeroSlider } from './modal-hero-slider';
+import { ModalStory } from './modal-story';
 import { trpc } from '@/lib/trpc';
-import { THeroSlider } from '@/types/hero-slider';
+import { TStory } from '@/types/story';
 import { Button } from '@/ui/button';
 import {
   createColumnHelper,
@@ -16,40 +16,57 @@ import Link from 'next/link';
 import { useMemo } from 'react';
 import toast from 'react-hot-toast';
 
-const columnHelper = createColumnHelper<THeroSlider>();
+const columnHelper = createColumnHelper<TStory>();
 
 export const List = () => {
-  const fetchData = trpc.heroSlider.getAll.useQuery();
+  const fetchData = trpc.story.getAll.useQuery();
   const utils = trpc.useUtils();
-  const deleteMutation = trpc.heroSlider.delete.useMutation({
+  const deleteMutation = trpc.story.delete.useMutation({
     onSuccess: (data: { success: boolean; message: string }) => {
       toast.success(data.message);
-      utils.heroSlider.getAll.invalidate();
+      utils.story.getAll.invalidate();
     },
     onError: (error: { message: string }) => {
       toast.error(error.message);
     },
   });
   const handleDelete = (id: string) => {
-    if (confirm('آیا از حذف این اسلایدر اطمینان دارید؟')) {
+    if (confirm('آیا از حذف این استوری اطمینان دارید؟')) {
       deleteMutation.mutate({ id });
     }
   };
 
   const columns = useMemo(
     () => [
-      columnHelper.accessor('image', {
-        header: 'تصویر',
+      columnHelper.accessor('avatar', {
+        header: 'آواتار',
         cell: (info) => (
-          <div className="relative h-16 w-32 overflow-hidden rounded-md">
+          <div className="relative size-16 overflow-hidden rounded-full">
             <Image
               src={info.getValue()}
-              alt="hero-slider"
+              alt="avatar"
               fill
               className="object-cover"
             />
           </div>
         ),
+      }),
+      columnHelper.accessor('cover', {
+        header: 'کاور',
+        cell: (info) => (
+          <div className="relative h-16 w-32 overflow-hidden rounded-md">
+            <Image
+              src={info.getValue()}
+              alt="cover"
+              fill
+              className="object-cover"
+            />
+          </div>
+        ),
+      }),
+      columnHelper.accessor('title', {
+        header: 'عنوان',
+        cell: (info) => <span className="font-medium">{info.getValue()}</span>,
       }),
       columnHelper.accessor('link', {
         header: 'لینک',
@@ -68,11 +85,11 @@ export const List = () => {
         header: 'عملیات',
         cell: (info) => (
           <div className="flex items-center gap-2">
-            <ModalHeroSlider mode="edit" slider={info.row.original}>
+            <ModalStory mode="edit" story={info.row.original}>
               <Button variant="outline" size="icon">
                 <Edit className="size-4 text-blue-500" />
               </Button>
-            </ModalHeroSlider>
+            </ModalStory>
             <Button
               variant="outline"
               size="icon"

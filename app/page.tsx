@@ -10,13 +10,15 @@ import { appRouter } from '@/server/_app';
 import { createContext } from '@/server/context';
 
 export default async function Page() {
-  const heroSlidersData = await appRouter
-    .createCaller(await createContext())
-    .heroSlider.getAll();
+  const caller = appRouter.createCaller(await createContext());
+  const [heroSlidersData, storiesData] = await Promise.all([
+    caller.heroSlider.getAll(),
+    caller.story.getAll(),
+  ]);
 
   return (
     <>
-      <Story />
+      <Story data={storiesData} />
       <HeroSlider data={heroSlidersData} />
       <Amazing />
       <Categories />

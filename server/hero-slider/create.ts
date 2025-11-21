@@ -4,8 +4,8 @@ import { z } from 'zod';
 export const create = publicProcedure
   .input(
     z.object({
-      image: z.string().min(1, 'تصویر الزامی است'),
-      link: z.string().min(1, 'لینک الزامی است'),
+      image: z.string(),
+      link: z.string(),
     }),
   )
   .mutation(async ({ ctx, input }) => {
@@ -26,4 +26,3 @@ export const create = publicProcedure
       },
     };
   });
-

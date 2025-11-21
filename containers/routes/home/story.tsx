@@ -1,17 +1,16 @@
 'use client';
 
-import Image from 'next/image';
-import { useState, useEffect, useRef } from 'react';
-import { ArrowRight, X } from 'lucide-react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Keyboard } from 'swiper/modules';
-import type { Swiper as SwiperType } from 'swiper';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowRight, X } from 'lucide-react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import type { Swiper as SwiperType } from 'swiper';
+import { Keyboard, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 type Story = {
   id: string;
@@ -21,68 +20,13 @@ type Story = {
   link: string;
 };
 
-const stories: Story[] = [
-  {
-    id: '1',
-    avatar: '/temp/story-avatar.jpeg',
-    cover: '/temp/story-image.jpg',
-    title: 'ربات چت ۳۰ هزار تومانی',
-    link: '/products/chatbot',
-  },
-  {
-    id: '2',
-    avatar: '/temp/story-avatar.jpeg',
-    cover: '/temp/story-image.jpg',
-    title: 'گوشی های هوشمند',
-    link: '/products/smartphones',
-  },
-  {
-    id: '3',
-    avatar: '/temp/story-avatar.jpeg',
-    cover: '/temp/story-image.jpg',
-    title: 'لپ تاپ گیمینگ',
-    link: '/products/gaming-laptops',
-  },
-  {
-    id: '4',
-    avatar: '/temp/story-avatar.jpeg',
-    cover: '/temp/story-image.jpg',
-    title: 'ساعت هوشمند',
-    link: '/products/smartwatch',
-  },
-  {
-    id: '5',
-    avatar: '/temp/story-avatar.jpeg',
-    cover: '/temp/story-image.jpg',
-    title: 'لوازم التحریر',
-    link: '/products/stationery',
-  },
-  {
-    id: '6',
-    avatar: '/temp/story-avatar.jpeg',
-    cover: '/temp/story-image.jpg',
-    title: 'استایل جذاب',
-    link: '/products/style',
-  },
-  {
-    id: '7',
-    avatar: '/temp/story-avatar.jpeg',
-    cover: '/temp/story-image.jpg',
-    title: 'دکوری',
-    link: '/products/decorative',
-  },
-  {
-    id: '8',
-    avatar: '/temp/story-avatar.jpeg',
-    cover: '/temp/story-image.jpg',
-    title: 'دکوری',
-    link: '/products/decorative',
-  },
-];
+interface StoryProps {
+  data: Story[];
+}
 
 const STORY_DURATION = 5000;
 
-export const Story = () => {
+export const Story = (props: StoryProps) => {
   const router = useRouter();
   const [isViewing, setIsViewing] = useState(false);
   const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
@@ -94,9 +38,9 @@ export const Story = () => {
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const startTimeRef = useRef<number>(0);
 
-  const currentStory = stories[currentStoryIndex];
+  const currentStory = props.data[currentStoryIndex];
   const isFirstStory = currentStoryIndex === 0;
-  const isLastStory = currentStoryIndex === stories.length - 1;
+  const isLastStory = currentStoryIndex === props.data.length - 1;
 
   const clearTimers = () => {
     if (intervalRef.current) {
@@ -206,8 +150,8 @@ export const Story = () => {
 
   const renderProgressBar = () => (
     <div className="absolute top-4 left-4 right-4 z-30 flex gap-1 flex-row-reverse">
-      {stories.map((_, index) => {
-        const rtlIndex = stories.length - 1 - index;
+      {props.data.map((_, index) => {
+        const rtlIndex = props.data.length - 1 - index;
         const width =
           rtlIndex < currentStoryIndex
             ? '100%'
@@ -321,7 +265,7 @@ export const Story = () => {
     <section className="w-full container">
       <div className="flex gap-6 overflow-x-auto pb-0.5 px-4 scroll-smooth snap-x snap-mandatory [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb:hover]:bg-gray-400">
         <div className="flex gap-6 mx-auto">
-          {stories.map((story, index) => (
+          {props.data?.map((story, index) => (
             <button
               key={story.id}
               onClick={() => openStory(index)}
@@ -382,7 +326,7 @@ export const Story = () => {
                   initialSlide={currentStoryIndex}
                   allowTouchMove={false}
                 >
-                  {stories.map(renderStorySlide)}
+                  {props.data.map(renderStorySlide)}
                 </Swiper>
               </div>
             </div>

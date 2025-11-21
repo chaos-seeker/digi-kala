@@ -28,3 +28,15 @@ model HeroSlider {
   @@map("hero-slider")
 }
 
+model Story {
+  id        String   @id @default(cuid())
+  avatar    String
+  cover     String
+  title     String
+  link      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("stories")
+}
+

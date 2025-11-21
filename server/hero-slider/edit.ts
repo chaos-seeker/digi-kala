@@ -4,20 +4,12 @@ import { z } from 'zod';
 export const edit = publicProcedure
   .input(
     z.object({
-      id: z.string().min(1, 'شناسه الزامی است'),
-      image: z.string().min(1, 'تصویر الزامی است'),
-      link: z.string().min(1, 'لینک الزامی است'),
+      id: z.string(),
+      image: z.string(),
+      link: z.string(),
     }),
   )
   .mutation(async ({ ctx, input }) => {
-    const existingSlider = await ctx.prisma.heroSlider.findUnique({
-      where: { id: input.id },
-    });
-
-    if (!existingSlider) {
-      throw new Error('اسلایدر یافت نشد');
-    }
-
     const heroSlider = await ctx.prisma.heroSlider.update({
       where: { id: input.id },
       data: {

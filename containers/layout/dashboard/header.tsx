@@ -1,6 +1,7 @@
 'use client';
 
 import { ModalHeroSlider } from '@/containers/routes/dashboard/hero-slider/modal-hero-slider';
+import { ModalStory } from '@/containers/routes/dashboard/story/modal-story';
 import { Button } from '@/ui/button';
 import {
   DropdownMenu,
@@ -30,6 +31,7 @@ export default function Header() {
               />
             </Link>
             <div className="flex items-center gap-2">
+              <AddStoryBtn />
               <AddHeroSliderBtn />
               <QuickAccess />
             </div>
@@ -45,6 +47,7 @@ const QuickAccess = () => {
 
   const menuItems = [
     { href: '/dashboard/hero-slider', label: 'مدیریت هیرو اسلایدر' },
+    { href: '/dashboard/story', label: 'مدیریت استوری' },
     { href: '/dashboard/brand', label: 'مدیریت برند' },
     { href: '/dashboard/category', label: 'مدیریت دسته بندی' },
   ];
@@ -92,6 +95,11 @@ const QuickAccess = () => {
 };
 
 const AddHeroSliderBtn = () => {
+  const pathname = usePathname();
+  const isShow = pathname === '/dashboard/hero-slider';
+
+  if (!isShow) return null;
+
   return (
     <ModalHeroSlider mode="add">
       <Button
@@ -102,5 +110,24 @@ const AddHeroSliderBtn = () => {
         <span>افزودن هیرو اسلایدر</span>
       </Button>
     </ModalHeroSlider>
+  );
+};
+
+const AddStoryBtn = () => {
+  const pathname = usePathname();
+  const isShow = pathname === '/dashboard/story';
+
+  if (!isShow) return null;
+
+  return (
+    <ModalStory mode="add">
+      <Button
+        variant="outline"
+        className="gap-1 hover:bg-primary hover:text-white py-5"
+      >
+        <Plus className="size-5" />
+        <span>افزودن استوری</span>
+      </Button>
+    </ModalStory>
   );
 };
