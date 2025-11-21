@@ -10,8 +10,8 @@ export default function Home() {
     <>
       <Story />
       <HeroSlider />
-      <Categories />
       <Amazing />
+      <Categories />
       <Brands />
       <History />
     </>

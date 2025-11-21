@@ -35,7 +35,7 @@ const slides: Slide[] = [
 
 export const HeroSlider = () => {
   return (
-    <section className="relative w-full h-[400px] container group">
+    <section className="relative w-full aspect-[27/8] container group">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={0}
@@ -55,7 +55,7 @@ export const HeroSlider = () => {
           disableOnInteraction: false,
         }}
         loop={true}
-        className="w-full h-full rounded-xl"
+        className="w-full h-full rounded-xl overflow-hidden"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>

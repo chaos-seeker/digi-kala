@@ -174,14 +174,14 @@ export const Categories = () => {
                 <SwiperSlide key={category.id} className="!w-auto">
                   <Link
                     href={category.href}
-                    className="flex flex-col items-center group"
+                    className="flex flex-col items-center"
                   >
                     <div className="relative w-16 h-16 sm:w-24 sm:h-24 mb-2 overflow-hidden duration-300">
                       <Image
                         src={category.image}
                         alt={category.title}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="object-cover hover:scale-105 transition-transform duration-300"
                       />
                     </div>
                     <span className="text-xs font-medium text-center text-gray-700 leading-tight">
@@ -218,14 +218,14 @@ export const Categories = () => {
             <Link
               key={category.id}
               href={category.href}
-              className="flex flex-col items-center group"
+              className="flex flex-col items-center"
             >
               <div className="relative w-16 h-16 sm:w-24 sm:h-24 mb-2 overflow-hidden duration-300">
                 <Image
                   src={category.image}
                   alt={category.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <span className="text-xs font-medium text-center text-gray-700 leading-tight">
