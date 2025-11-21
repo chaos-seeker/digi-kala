@@ -15,7 +15,7 @@ import {
 export default function Header() {
   return (
     <header>
-      <div className="container border-b py-3 flex flex-col gap-3">
+      <div className="container border mt-4 rounded-xl py-3 flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <Link href="/">
             <Image
