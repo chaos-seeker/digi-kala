@@ -1,6 +1,6 @@
 'use client';
 
-import { ModalAddHeroSlider } from '@/containers/routes/dashboard/hero-slider/modal-add-hero-slider';
+import { ModalHeroSlider } from '@/containers/routes/dashboard/hero-slider/modal-hero-slider';
 import { Button } from '@/ui/button';
 import {
   DropdownMenu,
@@ -93,7 +93,7 @@ const QuickAccess = () => {
 
 const AddHeroSliderBtn = () => {
   return (
-    <ModalAddHeroSlider>
+    <ModalHeroSlider mode="add">
       <Button
         variant="outline"
         className="gap-1 hover:bg-primary hover:text-white py-5"
@@ -101,6 +101,6 @@ const AddHeroSliderBtn = () => {
         <Plus className="size-5" />
         <span>افزودن هیرو اسلایدر</span>
       </Button>
-    </ModalAddHeroSlider>
+    </ModalHeroSlider>
   );
 };

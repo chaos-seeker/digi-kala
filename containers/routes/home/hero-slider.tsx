@@ -1,39 +1,19 @@
 'use client';
 
-import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { THeroSlider } from '@/types/hero-slider';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-type Slide = {
-  id: string;
-  image: string;
-  link: string;
-};
+interface HeroSliderProps {
+  data: THeroSlider[];
+}
 
-const slides: Slide[] = [
-  {
-    id: '1',
-    image: '/temp/slider-image.gif',
-    link: '/products/actident',
-  },
-  {
-    id: '2',
-    image: '/temp/slider-image.gif',
-    link: '/products/actident',
-  },
-  {
-    id: '3',
-    image: '/temp/slider-image.gif',
-    link: '/products/actident',
-  },
-];
-
-export const HeroSlider = () => {
+export const HeroSlider = (props: HeroSliderProps) => {
   return (
     <section className="relative w-full aspect-[27/8] container group">
       <Swiper
@@ -57,7 +37,7 @@ export const HeroSlider = () => {
         loop={true}
         className="w-full h-full rounded-xl overflow-hidden"
       >
-        {slides.map((slide) => (
+        {props.data?.map((slide) => (
           <SwiperSlide key={slide.id}>
             <a href={slide.link} className="block w-full h-full cursor-pointer">
               <Image

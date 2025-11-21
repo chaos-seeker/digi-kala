@@ -1,6 +1,6 @@
 'use client';
 
-import { ModalEditHeroSlider } from './modal-edit-hero-slider';
+import { ModalHeroSlider } from './modal-hero-slider';
 import { trpc } from '@/lib/trpc';
 import { THeroSlider } from '@/types/hero-slider';
 import { Button } from '@/ui/button';
@@ -68,11 +68,11 @@ export const List = () => {
         header: 'عملیات',
         cell: (info) => (
           <div className="flex items-center gap-2">
-            <ModalEditHeroSlider slider={info.row.original}>
+            <ModalHeroSlider mode="edit" slider={info.row.original}>
               <Button variant="outline" size="icon">
                 <Edit className="size-4 text-blue-500" />
               </Button>
-            </ModalEditHeroSlider>
+            </ModalHeroSlider>
             <Button
               variant="outline"
               size="icon"
