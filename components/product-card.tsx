@@ -22,13 +22,14 @@ export const ProductCard = (props: ProductCardProps) => {
 
   return (
     <Link href={props.href} className="block group">
-      <div className="bg-white hover:border-gray-300 transition-colors duration-200 overflow-hidden h-full">
-        <div className="relative aspect-square p-2">
+      <div className="bg-white hover:border-gray-300 transition-colors duration-200 overflow-hidden h-full flex flex-col">
+        <div className="relative w-full h-48 flex-shrink-0 p-4">
           <Image
             src={props.image}
             alt={props.title}
             fill
             className="object-contain transition-transform duration-300"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           />
         </div>
 

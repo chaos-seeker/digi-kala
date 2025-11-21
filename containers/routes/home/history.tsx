@@ -2,10 +2,16 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { ProductCard } from '@/components/product-card';
 import { cn } from '@/utils/cn';
 import { HistoryIcon } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import { useState, useRef } from 'react';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 type Category = {
   id: string;
@@ -177,21 +183,125 @@ const categories: Category[] = [
 ];
 
 export const History = () => {
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+  const swiperRef = useRef<any>(null);
+
   return (
     <section className="container">
-      <div className="border p-4 rounded-xl flex flex-col items-center justify-center gap-6">
+      <div className="border p-4 rounded-xl flex flex-col items-center justify-center gap-6 relative group">
         <div className="flex items-center gap-2">
           <HistoryIcon size={24} className="text-yellow-500" />
           <h2 className="font-medium">بر اساس سلیقه شما</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="xl:hidden w-full">
+          <div className="relative">
+            <Swiper
+              modules={[Navigation]}
+              spaceBetween={16}
+              slidesPerView={1}
+              breakpoints={{
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 16,
+                },
+              }}
+              dir="rtl"
+              watchSlidesProgress={true}
+              navigation={{
+                nextEl: '.history-slider-next',
+                prevEl: '.history-slider-prev',
+                enabled: true,
+              }}
+              onSlideChange={(swiper) => {
+                setIsBeginning(swiper.isBeginning);
+                setIsEnd(swiper.isEnd);
+              }}
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
+                setIsBeginning(swiper.isBeginning);
+                setIsEnd(swiper.isEnd);
+              }}
+              onReachEnd={() => {
+                setIsEnd(true);
+              }}
+              onReachBeginning={() => {
+                setIsBeginning(true);
+              }}
+              className="history-swiper"
+            >
+              {categories.map((category) => (
+                <SwiperSlide key={category.id}>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-col gap-1">
+                        <h3 className="font-medium text-gray-800">
+                          {category.title}
+                        </h3>
+                      </div>
+                      <Link
+                        href={category.href}
+                        className="flex items-center gap-1 text-primary text-sm font-medium hover:text-primary/80 transition-colors"
+                      >
+                        <span>مشاهده</span>
+                        <ChevronLeft size={16} />
+                      </Link>
+                    </div>
+                    <div className="grid grid-cols-2">
+                      {category.products.map((product, productIndex) => (
+                        <div
+                          key={product.id}
+                          className={cn(
+                            'pt-1',
+                            productIndex % 2 === 0 &&
+                              'border-l border-gray-200 pl-3',
+                            productIndex < 2 && 'border-b border-gray-200 pb-3',
+                          )}
+                        >
+                          <ProductCard
+                            id={product.id}
+                            title={product.title}
+                            price={product.price}
+                            discount={product.discount}
+                            image={product.image}
+                            href={product.href}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            {!isEnd && (
+              <div
+                className="history-slider-next absolute left-0 top-1/2 -translate-y-1/2 z-10 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                onClick={() => swiperRef.current?.slideNext()}
+              >
+                <div className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-300">
+                  <ChevronLeft size={20} />
+                </div>
+              </div>
+            )}
+            {!isBeginning && (
+              <div
+                className="history-slider-prev absolute right-0 top-1/2 -translate-y-1/2 z-10 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                onClick={() => swiperRef.current?.slidePrev()}
+              >
+                <div className="flex items-center justify-center w-10 h-10 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-300">
+                  <ChevronRight size={20} />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="hidden xl:grid grid-cols-4 gap-6">
           {categories.map((category, index) => (
             <div
               key={category.id}
               className={cn(
                 'flex flex-col gap-4',
-                index % 2 === 0 && 'md:border-l md:border-gray-200 md:pl-4',
-                index % 4 !== 3 && 'lg:border-l lg:border-gray-200 lg:pl-4',
+                index % 4 !== 3 && 'xl:border-l xl:border-gray-200 xl:pl-4',
               )}
             >
               <div className="flex items-center justify-between">

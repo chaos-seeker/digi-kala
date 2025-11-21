@@ -174,12 +174,12 @@ export const Amazing = () => {
               setIsBeginning(swiper.isBeginning);
               setIsEnd(swiper.isEnd);
             }}
-            className="amazing-swiper"
+            className="amazing-swiper pl-4!"
           >
             <SwiperSlide className="!w-[160px]">
               <div className="flex flex-col items-center justify-between h-full p-4 pl-0 text-center">
                 <div className="flex flex-col items-center">
-                  <div className="mb-2">
+                  <div className="mb-2 pt-4">
                     <Image
                       src="/images/routes/home/amazing-image.svg"
                       alt="شگفت انگیز"
@@ -224,7 +224,7 @@ export const Amazing = () => {
               </div>
             </SwiperSlide>
             {amazingProducts.map((product) => (
-              <SwiperSlide key={product.id} className="!w-[160px] mt-4">
+              <SwiperSlide key={product.id} className="!w-[160px] my-4">
                 <ProductCard
                   id={product.id}
                   title={product.title}

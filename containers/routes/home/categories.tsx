@@ -145,7 +145,7 @@ export const Categories = () => {
             <Swiper
               modules={[Navigation]}
               spaceBetween={16}
-              slidesPerView="auto"
+              slidesPerView={1.5}
               dir="rtl"
               watchSlidesProgress={true}
               navigation={{
