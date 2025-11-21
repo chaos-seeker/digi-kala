@@ -295,13 +295,13 @@ export const History = () => {
             )}
           </div>
         </div>
-        <div className="hidden xl:grid grid-cols-4 gap-6">
+        <div className="hidden xl:grid grid-cols-4 gap-2">
           {categories.map((category, index) => (
             <div
               key={category.id}
               className={cn(
                 'flex flex-col gap-4',
-                index % 4 !== 3 && 'xl:border-l xl:border-gray-200 xl:pl-4',
+                index % 4 !== 3 && 'xl:border-l xl:border-gray-200 xl:pl-2',
               )}
             >
               <div className="flex items-center justify-between">

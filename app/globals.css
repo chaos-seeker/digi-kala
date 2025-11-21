@@ -80,6 +80,9 @@
   * {
     @apply border-gray-200;
   }
+  html {
+    @apply scroll-smooth overflow-x-hidden;
+  }
   body {
     @apply flex min-h-dvh flex-col overflow-x-hidden;
   }
@@ -87,7 +90,7 @@
     @apply outline-none;
   }
   main {
-    @apply flex h-full flex-1 flex-col gap-5 pt-6 pb-10;
+    @apply flex h-full flex-1 flex-col gap-5 py-6;
   }
   button {
     @apply cursor-pointer;

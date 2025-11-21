@@ -176,7 +176,7 @@ export const Categories = () => {
                     href={category.href}
                     className="flex flex-col items-center"
                   >
-                    <div className="relative w-16 h-16 sm:w-24 sm:h-24 mb-2 overflow-hidden duration-300">
+                    <div className="relative w-24 h-24 mb-2 overflow-hidden duration-300">
                       <Image
                         src={category.image}
                         alt={category.title}

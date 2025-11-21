@@ -33,29 +33,30 @@ export const ProductCard = (props: ProductCardProps) => {
           />
         </div>
 
-        <div className="p-2 pt-2">
+        <div className="p-2">
           <h3 className="text-xsp font-medium text-gray-800 mb-2 line-clamp-2 leading-4 min-h-[2rem]">
             {props.title}
           </h3>
 
-          <div className="flex items-center justify-between">
-            {props.discount && (
-              <div className="bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded">
+          <div className="flex items-center justify-between gap-2">
+            {props.discount ? (
+              <div className="bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded flex-shrink-0">
                 {props.discount.toLocaleString('fa-IR')}%
               </div>
+            ) : (
+              <div></div>
             )}
 
-            <div className="flex flex-col items-end">
+            <div className="flex flex-col items-end flex-shrink-0">
               {props.discount && (
-                <span className="text-xs text-gray-400 line-through mb-0.5">
+                <span className="text-xs text-gray-400 line-through mb-0.5 whitespace-nowrap">
                   {formatPrice(props.price)}
                 </span>
               )}
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1 whitespace-nowrap">
                 <span className="text-sm font-bold text-gray-900">
                   {formatPrice(Math.round(discountedPrice))}
                 </span>
-                <span className="text-xsp font-bold text-gray-900">تومان</span>
               </div>
             </div>
           </div>
