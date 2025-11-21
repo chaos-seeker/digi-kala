@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { LogIn, SearchIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/ui/button';
+import { DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog } from '@/ui/dialog';
 
 export default function Header() {
   return (
@@ -35,7 +36,7 @@ const Login = () => {
   return (
     <Button
       variant="outline"
-      className="gap-1 hover:bg-primary hover:text-white"
+      className="gap-1 hover:bg-primary hover:text-white py-5"
     >
       <LogIn size={18} />
       <p>ورود | ثبت نام</p>
@@ -45,17 +46,24 @@ const Login = () => {
 
 const Search = () => {
   return (
-    <button className="flex items-center w-full lg:w-[400px] gap-2 border rounded-lg p-3">
-      <SearchIcon size={18} className="text-gray-400" />
-      <p className="text-sm flex gap-1 text-gray-400">
-        جستجو در{' '}
-        <Image
-          src="images/layout/typography.svg"
-          alt="digikala"
-          width={50}
-          height={50}
-        />
-      </p>
-    </button>
+    <Dialog>
+      <DialogTrigger asChild>
+        <button className="flex items-center w-full lg:w-[400px] gap-2 border rounded-lg p-3">
+          <SearchIcon size={18} className="text-gray-400" />
+          <p className="text-sm flex gap-1 text-gray-400">
+            جستجو در{' '}
+            <Image
+              src="images/layout/typography.svg"
+              alt="digikala"
+              width={50}
+              height={50}
+            />
+          </p>
+        </button>
+      </DialogTrigger>
+      <DialogContent>
+
+      </DialogContent>
+    </Dialog>
   );
 };
