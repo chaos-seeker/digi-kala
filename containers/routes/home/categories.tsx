@@ -145,7 +145,7 @@ export const Categories = () => {
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <span className="text-xs font-medium text-center text-gray-700 leading-tight">
+              <span className="text-xsp font-medium text-center text-gray-700 leading-tight">
                 {category.title}
               </span>
             </Link>

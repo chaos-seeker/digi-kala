@@ -32,8 +32,8 @@ export const ProductCard = (props: ProductCardProps) => {
           />
         </div>
 
-        <div className="p-2 pt-1">
-          <h3 className="text-xs text-gray-800 mb-2 line-clamp-2 leading-4 min-h-[2rem]">
+        <div className="p-2 pt-2">
+          <h3 className="text-xsp font-medium text-gray-800 mb-2 line-clamp-2 leading-4 min-h-[2rem]">
             {props.title}
           </h3>
 
