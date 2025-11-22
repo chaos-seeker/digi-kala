@@ -165,7 +165,7 @@ const Search = () => {
               <h3 className="text-sm font-medium">جستجوهای پرطرفدار</h3>
             </div>
             <div className="flex items-center gap-2 flex-wrap">
-              {['شارژر', 'موس', 'ساعت', 'هندزفری'].map((item) => (
+              {['مانیتور', 'کیبورد', 'ساعت', 'کنسول'].map((item) => (
                 <Link
                   key={item}
                   href={`/explore?q=${encodeURIComponent(item)}`}

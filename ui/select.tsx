@@ -65,7 +65,9 @@ function SelectTrigger({
           {children}
         </div>
       </SelectPrimitive.Trigger>
-      {error && <span className="text-xs text-red-500">{error}</span>}
+      {error && (
+        <span className="text-xs text-red-500 text-right">{error}</span>
+      )}
     </div>
   );
 }

@@ -1,17 +1,15 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { ProductCard } from '@/components/product-card';
-import { cn } from '@/utils/cn';
-import { HistoryIcon } from 'lucide-react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import { useState, useRef } from 'react';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { ProductCard } from '@/components/product-card';
+import { TProduct } from '@/types/product';
+import { cn } from '@/utils/cn';
+import { ChevronLeft, ChevronRight, HistoryIcon } from 'lucide-react';
+import Link from 'next/link';
+import { useMemo, useRef, useState } from 'react';
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 type Category = {
   id: string;
@@ -27,165 +25,61 @@ type Category = {
   }[];
 };
 
-const categories: Category[] = [
-  {
-    id: '1',
-    title: 'جوراب مردانه',
-    href: '/categories/mens-socks',
-    products: [
-      {
-        id: '1',
-        title: 'جوراب مردانه',
-        price: 50000,
-        discount: 20,
-        image: '/temp/product-image.webp',
-        href: '/products/sock-1',
-      },
-      {
-        id: '2',
-        title: 'جوراب مردانه',
-        price: 45000,
-        discount: 15,
-        image: '/temp/product-image.webp',
-        href: '/products/sock-2',
-      },
-      {
-        id: '3',
-        title: 'جوراب مردانه',
-        price: 55000,
-        image: '/temp/product-image.webp',
-        href: '/products/sock-3',
-      },
-      {
-        id: '4',
-        title: 'جوراب مردانه',
-        price: 48000,
-        discount: 10,
-        image: '/temp/product-image.webp',
-        href: '/products/sock-4',
-      },
-    ],
-  },
-  {
-    id: '2',
-    title: 'کیف و کاور گوشی',
-    href: '/categories/phone-cases',
-    products: [
-      {
-        id: '5',
-        title: 'کیف و کاور گوشی',
-        price: 150000,
-        discount: 25,
-        image: '/temp/product-image.webp',
-        href: '/products/case-1',
-      },
-      {
-        id: '6',
-        title: 'کیف و کاور گوشی',
-        price: 120000,
-        discount: 30,
-        image: '/temp/product-image.webp',
-        href: '/products/case-2',
-      },
-      {
-        id: '7',
-        title: 'کیف و کاور گوشی',
-        price: 180000,
-        image: '/temp/product-image.webp',
-        href: '/products/case-3',
-      },
-      {
-        id: '8',
-        title: 'کیف و کاور گوشی',
-        price: 200000,
-        discount: 15,
-        image: '/temp/product-image.webp',
-        href: '/products/case-4',
-      },
-    ],
-  },
-  {
-    id: '3',
-    title: 'گوشی موبایل',
-    href: '/categories/mobile-phones',
-    products: [
-      {
-        id: '9',
-        title: 'گوشی موبایل',
-        price: 15000000,
-        discount: 10,
-        image: '/temp/product-image.webp',
-        href: '/products/phone-1',
-      },
-      {
-        id: '10',
-        title: 'گوشی موبایل',
-        price: 18000000,
-        discount: 12,
-        image: '/temp/product-image.webp',
-        href: '/products/phone-2',
-      },
-      {
-        id: '11',
-        title: 'گوشی موبایل',
-        price: 12000000,
-        image: '/temp/product-image.webp',
-        href: '/products/phone-3',
-      },
-      {
-        id: '12',
-        title: 'گوشی موبایل',
-        price: 20000000,
-        discount: 8,
-        image: '/temp/product-image.webp',
-        href: '/products/phone-4',
-      },
-    ],
-  },
-  {
-    id: '4',
-    title: 'مکمل انرژی زا',
-    href: '/categories/energy-supplements',
-    products: [
-      {
-        id: '13',
-        title: 'مکمل انرژی زا',
-        price: 500000,
-        discount: 20,
-        image: '/temp/product-image.webp',
-        href: '/products/supplement-1',
-      },
-      {
-        id: '14',
-        title: 'مکمل انرژی زا',
-        price: 450000,
-        discount: 15,
-        image: '/temp/product-image.webp',
-        href: '/products/supplement-2',
-      },
-      {
-        id: '15',
-        title: 'مکمل انرژی زا',
-        price: 600000,
-        image: '/temp/product-image.webp',
-        href: '/products/supplement-3',
-      },
-      {
-        id: '16',
-        title: 'مکمل انرژی زا',
-        price: 550000,
-        discount: 10,
-        image: '/temp/product-image.webp',
-        href: '/products/supplement-4',
-      },
-    ],
-  },
-];
+interface HistoryProps {
+  products: TProduct[];
+}
 
-export const History = () => {
+export const History = ({ products }: HistoryProps) => {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const swiperRef = useRef<any>(null);
+
+  const categories = useMemo(() => {
+    // Fixed titles for the 4 boxes
+    const fixedTitles = [
+      'لوازم دیجیتال',
+      'لوازم خانگی',
+      'لوازم کوه نوردی',
+      'لوازم تحریر',
+    ];
+
+    // Always create 4 boxes with 4 products each
+    const groups: Category[] = [];
+
+    for (let i = 0; i < 4; i++) {
+      const startIndex = i * 4;
+      const endIndex = startIndex + 4;
+      // Slice 4 products for each box
+      let groupProducts = products.slice(startIndex, endIndex);
+
+      // If not enough products, cycle through the products array
+      if (groupProducts.length < 4 && products.length > 0) {
+        const remaining = 4 - groupProducts.length;
+        const additionalProducts = products.slice(0, remaining);
+        groupProducts = [...groupProducts, ...additionalProducts].slice(0, 4);
+      }
+
+      groups.push({
+        id: `category-${i + 1}`,
+        title: fixedTitles[i],
+        href: '/explore',
+        products: groupProducts.map((product) => ({
+          id: product.id,
+          title: product.nameFa,
+          price: product.price,
+          discount: product.discount,
+          image: product.images[0] || '/temp/product-image.webp',
+          href: `/products/${product.slug}`,
+        })),
+      });
+    }
+
+    return groups;
+  }, [products]);
+
+  if (categories.length === 0) {
+    return null;
+  }
 
   return (
     <section className="container">
@@ -262,7 +156,7 @@ export const History = () => {
                             id={product.id}
                             title={product.title}
                             price={product.price}
-                            discount={product.discount}
+                            discount={product.discount || 0}
                             image={product.image}
                             href={product.href}
                           />

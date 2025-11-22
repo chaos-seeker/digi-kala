@@ -45,13 +45,6 @@ const dashboardPages = [
     icon: Package,
     color: 'bg-indigo-500',
   },
-  {
-    title: 'مدیریت محصولات',
-    description: 'مدیریت محصولات فروشگاه',
-    href: '/dashboard/product',
-    icon: Package,
-    color: 'bg-orange-500',
-  },
 ];
 
 export const QuickAccess = () => {

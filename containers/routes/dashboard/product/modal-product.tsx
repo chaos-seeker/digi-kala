@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from '@/ui/dialog';
 import { Input } from '@/ui/input';
-import { InputImage } from '@/ui/input-image';
+import { MultipleImageInput } from '@/ui/multiple-image-input';
 import MultipleSelector, { Option } from '@/ui/multiple-selector';
 import {
   Select,
@@ -34,7 +34,7 @@ import { z } from 'zod';
 const formSchema = z.object({
   nameFa: z.string().min(1, 'نام فارسی الزامی است'),
   nameEn: z.string().min(1, 'نام انگلیسی الزامی است'),
-  price: z.number().min(0, 'قیمت باید بیشتر یا مساوی صفر باشد'),
+  price: z.number().min(1, 'وارد کردن قیمت الزامی است'),
   discount: z.number().min(0).max(100, 'تخفیف باید بین 0 تا 100 باشد'),
   images: z.array(z.string()).min(1, 'حداقل یک تصویر الزامی است'),
   colors: z
@@ -46,18 +46,26 @@ const formSchema = z.object({
       }),
     )
     .min(1, 'انتخاب حداقل یک رنگ الزامی است'),
-  category: z.object({
-    id: z.string(),
-    title: z.string(),
-    image: z.string(),
-    slug: z.string(),
-  }),
-  brand: z.object({
-    id: z.string(),
-    title: z.string(),
-    image: z.string(),
-    slug: z.string(),
-  }),
+  category: z
+    .object({
+      id: z.string(),
+      title: z.string(),
+      image: z.string(),
+      slug: z.string(),
+    })
+    .refine((data) => data.id && data.id.length > 0, {
+      message: 'انتخاب دسته‌بندی الزامی است',
+    }),
+  brand: z
+    .object({
+      id: z.string(),
+      title: z.string(),
+      image: z.string(),
+      slug: z.string(),
+    })
+    .refine((data) => data.id && data.id.length > 0, {
+      message: 'انتخاب برند الزامی است',
+    }),
   description: z.string().min(1, 'توضیحات الزامی است'),
   slug: z.string().min(1, 'اسلاگ الزامی است'),
   attributes: z.array(
@@ -88,6 +96,7 @@ export function ModalProduct({
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
+    mode: 'onChange',
     defaultValues: {
       nameFa: (mode === 'edit' && product?.nameFa) || '',
       nameEn: (mode === 'edit' && product?.nameEn) || '',
@@ -223,26 +232,12 @@ export function ModalProduct({
               control={form.control}
               name="images"
               render={({ field, fieldState }) => (
-                <div>
-                  <InputImage
-                    label=""
-                    onChange={async (file: File | null) => {
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onloadend = () => {
-                          const base64 = reader.result as string;
-                          field.onChange([...(field.value || []), base64]);
-                        };
-                        reader.readAsDataURL(file);
-                      }
-                    }}
-                  />
-                  {fieldState.error && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {fieldState.error.message}
-                    </p>
-                  )}
-                </div>
+                <MultipleImageInput
+                  label=""
+                  value={field.value || []}
+                  onChange={field.onChange}
+                  error={fieldState.error?.message}
+                />
               )}
             />
           </div>
@@ -341,13 +336,24 @@ export function ModalProduct({
                             image: selectedCategory.image,
                             slug: selectedCategory.slug,
                           });
+                        } else {
+                          field.onChange({
+                            id: '',
+                            title: '',
+                            image: '',
+                            slug: '',
+                          });
                         }
+                        form.trigger('category');
                       }}
                     >
                       <SelectTrigger
                         className="w-full text-right"
                         label="دسته‌بندی"
-                        error={fieldState.error?.message}
+                        error={
+                          fieldState.error?.message ||
+                          form.formState.errors.category?.message
+                        }
                       >
                         <SelectValue placeholder="انتخاب دسته‌بندی" />
                       </SelectTrigger>
@@ -383,13 +389,24 @@ export function ModalProduct({
                             image: selectedBrand.image,
                             slug: selectedBrand.slug,
                           });
+                        } else {
+                          field.onChange({
+                            id: '',
+                            title: '',
+                            image: '',
+                            slug: '',
+                          });
                         }
+                        form.trigger('brand');
                       }}
                     >
                       <SelectTrigger
                         className="w-full text-right"
                         label="برند"
-                        error={fieldState.error?.message}
+                        error={
+                          fieldState.error?.message ||
+                          form.formState.errors.brand?.message
+                        }
                       >
                         <SelectValue placeholder="انتخاب برند" />
                       </SelectTrigger>
@@ -479,7 +496,7 @@ export function ModalProduct({
                 <textarea
                   id="description"
                   rows={4}
-                  className="w-full p-2 border rounded-md"
+                  className="w-full p-2 border rounded-md text-sm"
                   {...field}
                   value={field.value || ''}
                 />

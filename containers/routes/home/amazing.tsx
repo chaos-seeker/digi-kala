@@ -1,131 +1,21 @@
 'use client';
 
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { ProductCard } from '@/components/product-card';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { ProductCard } from '@/components/product-card';
+import { TProduct } from '@/types/product';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-type AmazingProduct = {
-  id: string;
-  title: string;
-  price: number;
-  discount: number;
-  image: string;
-  href: string;
-  rating?: number;
-  reviewCount?: number;
-};
+interface AmazingProps {
+  products: TProduct[];
+}
 
-const amazingProducts: AmazingProduct[] = [
-  {
-    id: '1',
-    title: 'ساعت هوشمند نکسون سنس مدل QX11',
-    price: 2950000,
-    discount: 21,
-    image: '/temp/product-image.webp',
-    href: '/products/smartwatch-qx11',
-    rating: 4.2,
-    reviewCount: 156,
-  },
-  {
-    id: '2',
-    title: 'ساعت مچی غواصی کوارتز مردانه هامر مدل HM1442',
-    price: 2714000,
-    discount: 8,
-    image: '/temp/product-image.webp',
-    href: '/products/watch-hm1442',
-    rating: 4.5,
-    reviewCount: 89,
-  },
-  {
-    id: '3',
-    title: 'لپ تاپ 15.6 اینچی ام اس آی مدل Cyborg 15',
-    price: 76740000,
-    discount: 13,
-    image: '/temp/product-image.webp',
-    href: '/products/laptop-cyborg15',
-    rating: 4.1,
-    reviewCount: 234,
-  },
-  {
-    id: '4',
-    title: 'لپ تاپ 15.6 اینچی اچ پی مدل 15-fc0171nia-15-Athlon',
-    price: 30785000,
-    discount: 26,
-    image: '/temp/product-image.webp',
-    href: '/products/laptop-hp-athlon',
-    rating: 3.9,
-    reviewCount: 67,
-  },
-  {
-    id: '5',
-    title: 'هندفری ایکس او مدل EP38',
-    price: 152900,
-    discount: 44,
-    image: '/temp/product-image.webp',
-    href: '/products/headphone-ep38',
-    rating: 4.3,
-    reviewCount: 445,
-  },
-  {
-    id: '6',
-    title: 'هندفری ایکس او مدل S6',
-    price: 317000,
-    discount: 48,
-    image: '/temp/product-image.webp',
-    href: '/products/headphone-s6',
-    rating: 4.0,
-    reviewCount: 123,
-  },
-  {
-    id: '7',
-    title: 'هدفون بلوتوثی مدل JR04',
-    price: 389000,
-    discount: 54,
-    image: '/temp/product-image.webp',
-    href: '/products/headphone-jr04',
-    rating: 4.4,
-    reviewCount: 789,
-  },
-  {
-    id: '8',
-    title: 'هدفون بلوتوثی مدل JR04',
-    price: 389000,
-    discount: 54,
-    image: '/temp/product-image.webp',
-    href: '/products/headphone-jr04',
-    rating: 4.4,
-    reviewCount: 789,
-  },
-  {
-    id: '9',
-    title: 'هدفون بلوتوثی مدل JR04',
-    price: 389000,
-    discount: 54,
-    image: '/temp/product-image.webp',
-    href: '/products/headphone-jr04',
-    rating: 4.4,
-    reviewCount: 789,
-  },
-  {
-    id: '10',
-    title: 'هدفون بلوتوثی مدل JR04',
-    price: 389000,
-    discount: 54,
-    image: '/temp/product-image.webp',
-    href: '/products/headphone-jr04',
-    rating: 4.4,
-    reviewCount: 789,
-  },
-];
-
-export const Amazing = () => {
+export const Amazing = (props: AmazingProps) => {
   const [timeLeft, setTimeLeft] = useState({
     hours: 5,
     minutes: 23,
@@ -223,15 +113,15 @@ export const Amazing = () => {
                 </div>
               </div>
             </SwiperSlide>
-            {amazingProducts.map((product) => (
+            {props.products.slice(0, 10).map((product) => (
               <SwiperSlide key={product.id} className="!w-[160px] my-4">
                 <ProductCard
                   id={product.id}
-                  title={product.title}
+                  title={product.nameFa}
                   price={product.price}
-                  discount={product.discount}
-                  image={product.image}
-                  href={product.href}
+                  discount={product.discount || 0}
+                  image={product.images[0] || '/temp/product-image.webp'}
+                  href={`/products/${product.slug}`}
                 />
               </SwiperSlide>
             ))}
