@@ -10,7 +10,7 @@ export function Title({ product }: TitleProps) {
   const brand = product.brand as any;
 
   return (
-    <section className="flex flex-col gap-2 pt-4">
+    <section className="flex flex-col gap-2 pt-2">
       <div className="flex flex-col gap-1">
         {brand && category && (
           <p className="text-sm font-medium text-gray-500">

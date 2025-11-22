@@ -1,5 +1,12 @@
 import { Button } from '@/ui/button';
-import { BookOpen, Image as ImageIcon, LayoutGrid, Package, Palette, Star } from 'lucide-react';
+import {
+  BookOpen,
+  Image as ImageIcon,
+  LayoutGrid,
+  Package,
+  Palette,
+  Star,
+} from 'lucide-react';
 import Link from 'next/link';
 
 const dashboardPages = [

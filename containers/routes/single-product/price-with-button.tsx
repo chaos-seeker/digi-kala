@@ -1,16 +1,26 @@
+'use client';
+
+import { cartSlice } from '@/slices/cart';
 import { TProduct } from '@/types/product';
 import { Button } from '@/ui/button';
-import { Plus } from 'lucide-react';
+import { useKillua } from 'killua';
+import { Plus, Trash2 } from 'lucide-react';
 
 interface PriceWithButtonProps {
   product: TProduct;
 }
 
 export function PriceWithButton({ product }: PriceWithButtonProps) {
+  const cart = useKillua(cartSlice);
+  const isInCart = cart.selectors.isInCart(product);
+
   const discount = product.discount ?? 0;
   const priceWithoutDiscount = product.price ?? 0;
   const priceWithDiscount = product.price * (1 - discount / 100);
   const hasDiscount = discount !== 0;
+
+  const handleAdd = () => cart.reducers.add(product);
+  const handleRemove = () => cart.reducers.remove(product);
 
   return (
     <div className="lg:w-80 lg:shrink-0">
@@ -48,10 +58,23 @@ export function PriceWithButton({ product }: PriceWithButtonProps) {
             </p>
           </div>
         </div>
-        <Button className="w-full bg-primary hover:bg-primary/90 text-white h-12 text-base font-medium rounded-lg flex items-center justify-center gap-2">
-          <Plus className="size-5" />
-          <span>افزودن به سبد خرید</span>
-        </Button>
+        {isInCart ? (
+          <Button
+            onClick={handleRemove}
+            className="w-full bg-gray-500 hover:bg-gray-600 text-white h-12 text-base font-medium rounded-lg flex items-center justify-center gap-2"
+          >
+            <Trash2 className="size-5" />
+            <span>حذف از سبد خرید</span>
+          </Button>
+        ) : (
+          <Button
+            onClick={handleAdd}
+            className="w-full bg-primary hover:bg-primary/90 text-white h-12 text-base font-medium rounded-lg flex items-center justify-center gap-2"
+          >
+            <Plus className="size-5" />
+            <span>افزودن به سبد خرید</span>
+          </Button>
+        )}
       </section>
     </div>
   );

@@ -1,6 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
+import { cartSlice } from '@/slices/cart';
 import { userSlice } from '@/slices/user';
 import { TProduct } from '@/types/product';
 import { Button } from '@/ui/button';
@@ -118,15 +119,23 @@ const Login = () => {
 };
 
 const Cart = () => {
+  const cart = useKillua(cartSlice);
+  const totalItems = cart.selectors.totalItems();
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <Button
           variant="outline"
           size="icon"
-          className="gap-1 hover:bg-primary hover:text-white py-5"
+          className="relative gap-1 hover:bg-primary hover:text-white py-5"
         >
           <ShoppingBag className="size-5" />
+          {totalItems > 0 && (
+            <span className="absolute -top-1 -right-1 flex border-white h-4.5 w-4.5 border items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white">
+              {totalItems}
+            </span>
+          )}
         </Button>
       </TooltipTrigger>
       <TooltipContent>سبد خرید</TooltipContent>
