@@ -23,8 +23,8 @@ export function PriceWithButton({ product }: PriceWithButtonProps) {
   const handleRemove = () => cart.reducers.remove(product);
 
   return (
-    <div className="lg:w-80 lg:shrink-0">
-      <section className="flex flex-col gap-4 bg-white rounded-lg border p-4">
+    <div className="lg:flex lg:items-center">
+      <section className="flex flex-col lg:w-80 gap-4 bg-white rounded-lg border p-4">
         <div className="flex items-start justify-between flex-row-reverse">
           <div className="flex flex-col gap-2">
             {hasDiscount && (

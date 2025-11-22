@@ -37,4 +37,3 @@ export function Category({ category }: CategoryProps) {
     </section>
   );
 }
-

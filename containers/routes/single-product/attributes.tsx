@@ -17,7 +17,7 @@ export function Attributes({ product }: AttributesProps) {
             return (
               <div
                 key={item.key}
-                className="flex flex-col gap-1 bg-gray-100 rounded-lg p-3"
+                className="flex flex-col gap-1 bg-gray-100 rounded-lg px-3 py-2"
               >
                 <p className="text-sm font-medium text-gray-600">{item.key}</p>
                 <p className="text-sm font-medium text-gray-500">

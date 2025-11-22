@@ -1,8 +1,8 @@
 'use client';
 
+import { formatPrice } from '@/utils/format-price';
 import Image from 'next/image';
 import Link from 'next/link';
-import { formatPrice } from '@/utils/format-price';
 
 type ProductCardProps = {
   id: string;
@@ -23,7 +23,7 @@ export const ProductCard = (props: ProductCardProps) => {
   return (
     <Link href={props.href} className="block group">
       <div className="bg-white hover:border-gray-300 transition-colors duration-200 overflow-hidden h-full flex flex-col">
-        <div className="relative w-full h-48 flex-shrink-0 p-4">
+        <div className="relative w-full h-48 shrink-0 p-4">
           <Image
             src={props.image}
             alt={props.title}

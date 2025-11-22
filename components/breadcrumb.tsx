@@ -18,17 +18,13 @@ export function Breadcrumb({ product }: BreadcrumbProps) {
         >
           دیجی کالا
         </Link>
-        {category?.title && (
-          <>
-            <ChevronLeft className="stroke-gray-500 text-sm" />
-            <Link
-              href={`/explore?category=${category.slug}`}
-              className="text-sm font-medium text-gray-500 transition-all hover:text-primary"
-            >
-              {category.title}
-            </Link>
-          </>
-        )}
+        <ChevronLeft className="stroke-gray-500 text-sm" />
+        <Link
+          href={`/explore?category=${category.slug}`}
+          className="text-sm font-medium text-gray-500 transition-all hover:text-primary"
+        >
+          {category.title}
+        </Link>
         <ChevronLeft className="stroke-gray-500 text-sm" />
         <p className="text-sm font-medium text-gray-500">{product.nameFa}</p>
       </div>
