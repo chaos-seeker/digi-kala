@@ -69,6 +69,40 @@ model Color {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  products ProductColor[]
+
   @@map("colors")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  nameFa      String   @map("name_fa")
+  nameEn      String   @map("name_en")
+  price       Int
+  discount    Int      @default(0)
+  images      String[]
+  attributes  Json
+  description String
+  category    Json
+  brand       Json
+  slug        String   @unique
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  colors ProductColor[]
+
+  @@map("products")
+}
+
+model ProductColor {
+  id        String @id @default(cuid())
+  productId String @map("product_id")
+  colorId   String @map("color_id")
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  color   Color   @relation(fields: [colorId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, colorId])
+  @@map("product_colors")
 }
 

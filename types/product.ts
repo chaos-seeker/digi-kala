@@ -9,7 +9,7 @@ export type TProduct = {
   price: number;
   discount?: number;
   images: string[];
-  color: TColor;
+  colors: TColor[];
   attributes: { key: string; value: string }[];
   description: string;
   category: TCategory;

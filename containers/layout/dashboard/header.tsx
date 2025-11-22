@@ -4,6 +4,7 @@ import { ModalBrand } from '@/containers/routes/dashboard/brand/modal-brand';
 import { ModalCategory } from '@/containers/routes/dashboard/category/modal-category';
 import { ModalColor } from '@/containers/routes/dashboard/color/modal-color';
 import { ModalHeroSlider } from '@/containers/routes/dashboard/hero-slider/modal-hero-slider';
+import { ModalProduct } from '@/containers/routes/dashboard/product/modal-product';
 import { ModalStory } from '@/containers/routes/dashboard/story/modal-story';
 import { Button } from '@/ui/button';
 import {
@@ -37,6 +38,7 @@ export default function Header() {
               <AddBrandBtn />
               <AddCategoryBtn />
               <AddColorBtn />
+              <AddProductBtn />
               <AddStoryBtn />
               <AddHeroSliderBtn />
               <QuickAccess />
@@ -57,6 +59,7 @@ const QuickAccess = () => {
     { href: '/dashboard/brand', label: 'مدیریت برند' },
     { href: '/dashboard/category', label: 'مدیریت دسته بندی' },
     { href: '/dashboard/color', label: 'مدیریت رنگ‌ها' },
+    { href: '/dashboard/product', label: 'مدیریت محصولات' },
   ];
 
   return (
@@ -193,5 +196,24 @@ const AddColorBtn = () => {
         <span>افزودن رنگ</span>
       </Button>
     </ModalColor>
+  );
+};
+
+const AddProductBtn = () => {
+  const pathname = usePathname();
+  const isShow = pathname === '/dashboard/product';
+
+  if (!isShow) return null;
+
+  return (
+    <ModalProduct mode="add">
+      <Button
+        variant="outline"
+        className="gap-1 hover:bg-primary hover:text-white py-5"
+      >
+        <Plus className="size-5" />
+        <span>افزودن محصول</span>
+      </Button>
+    </ModalProduct>
   );
 };
