@@ -19,6 +19,7 @@ import { create as createProduct } from './product/create';
 import { deleteProduct } from './product/delete';
 import { edit as editProduct } from './product/edit';
 import { getAll as getAllProducts } from './product/get-all';
+import { search as searchProducts } from './product/search';
 import { create as createStory } from './story/create';
 import { deleteStory } from './story/delete';
 import { edit as editStory } from './story/edit';
@@ -64,6 +65,7 @@ export const appRouter = router({
     create: createProduct,
     edit: editProduct,
     delete: deleteProduct,
+    search: searchProducts,
   }),
 });
 

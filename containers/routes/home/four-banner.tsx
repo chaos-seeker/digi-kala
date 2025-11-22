@@ -13,22 +13,22 @@ const banners: Banner[] = [
   {
     id: '1',
     image: '/images/routes/home/four-banner-1.webp',
-    href: '/campaigns/banner-1',
+    href: '/explore',
   },
   {
     id: '2',
     image: '/images/routes/home/four-banner-2.webp',
-    href: '/campaigns/banner-2',
+    href: '/explore',
   },
   {
     id: '3',
     image: '/images/routes/home/four-banner-3.webp',
-    href: '/campaigns/banner-3',
+    href: '/explore',
   },
   {
     id: '4',
     image: '/images/routes/home/four-banner-4.webp',
-    href: '/campaigns/banner-4',
+    href: '/explore',
   },
 ];
 

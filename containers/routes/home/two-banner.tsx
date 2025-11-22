@@ -13,12 +13,12 @@ const banners: Banner[] = [
   {
     id: '1',
     image: '/images/routes/home/two-banner-1.webp',
-    href: '/campaigns/rayban',
+    href: '/explore',
   },
   {
     id: '2',
     image: '/images/routes/home/two-banner-2.gif',
-    href: '/campaigns/skincare',
+    href: '/explore',
   },
 ];
 

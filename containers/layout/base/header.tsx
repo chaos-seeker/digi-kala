@@ -1,6 +1,8 @@
 'use client';
 
+import { trpc } from '@/lib/trpc';
 import { userSlice } from '@/slices/user';
+import { TProduct } from '@/types/product';
 import { Button } from '@/ui/button';
 import {
   Dialog,
@@ -14,12 +16,14 @@ import { useKillua } from 'killua';
 import {
   Flame,
   LayoutGrid,
+  Loader2,
   SearchIcon,
   ShoppingBag,
   UserIcon,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Header() {
   const user = useKillua(userSlice);
@@ -131,6 +135,24 @@ const Cart = () => {
 };
 
 const Search = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+
+  const { data: searchResults, isLoading } = trpc.product.search.useQuery(
+    { query: debouncedQuery },
+    {
+      enabled: debouncedQuery.length > 0,
+    },
+  );
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -156,26 +178,73 @@ const Search = () => {
           <input
             placeholder="جستجو ..."
             className="text-sm flex-1 outline-none"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
         <div className="mt-15 lg:mt-13">
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-1 text-gray-700">
-              <Flame className="text-gray-400 size-[18px]" />
-              <h3 className="text-sm font-medium">جستجوهای پرطرفدار</h3>
+          {searchQuery.length > 0 ? (
+            <div className="flex flex-col gap-4">
+              {isLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="size-6 text-gray-400 animate-spin" />
+                </div>
+              ) : searchResults && searchResults.length > 0 ? (
+                <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 max-h-[400px] overflow-y-auto">
+                    {searchResults.map((product: TProduct) => (
+                      <Link
+                        key={product.id}
+                        href={`/products/${product.slug}`}
+                        className="flex items-center gap-3 w-fit transition-colors"
+                      >
+                        <div className="relative w-16 h-16 shrink-0 rounded-lg overflow-hidden bg-gray-100">
+                          <Image
+                            src={
+                              product.images[0] || '/temp/product-image.webp'
+                            }
+                            alt={product.nameFa}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium max-w-[200px] text-gray-800 truncate">
+                            {product.nameFa}
+                          </p>
+                          <p className="text-xs text-gray-500 truncate">
+                            {product.category.title}
+                          </p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center py-8">
+                  <p className="text-sm text-gray-500">نتیجه‌ای یافت نشد.</p>
+                </div>
+              )}
             </div>
-            <div className="flex items-center gap-2 flex-wrap">
-              {['مانیتور', 'کیبورد', 'ساعت', 'کنسول'].map((item) => (
-                <Link
-                  key={item}
-                  href={`/explore?q=${encodeURIComponent(item)}`}
-                  className="px-3.5 py-1.5 rounded-full border text-sm text-gray-700 hover:bg-primary hover:text-white"
-                >
-                  {item}
-                </Link>
-              ))}
+          ) : (
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-1 text-gray-700">
+                <Flame className="text-gray-400 size-[18px]" />
+                <h3 className="text-sm font-medium">جستجوهای پرطرفدار</h3>
+              </div>
+              <div className="flex items-center gap-2 flex-wrap">
+                {['مانیتور', 'کیبورد', 'ساعت', 'کنسول'].map((item) => (
+                  <button
+                    key={item}
+                    onClick={() => setSearchQuery(item)}
+                    className="px-3.5 py-1.5 rounded-full border text-sm text-gray-700 hover:bg-primary hover:text-white transition-colors"
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>

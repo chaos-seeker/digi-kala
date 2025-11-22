@@ -7,6 +7,7 @@ import { ProductCard } from '@/components/product-card';
 import { TProduct } from '@/types/product';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -104,12 +105,14 @@ export const Amazing = (props: AmazingProps) => {
                     </div>
                   </div>
 
-                  <button className="rounded-full flex items-center gap-1 px-3 py-1.5 transition-colors">
-                    <span className="text-white text-xs font-medium">
-                      مشاهده همه
-                    </span>
-                    <ChevronLeft className="size-4 text-white" />
-                  </button>
+                  <Link href="/explore">
+                    <button className="rounded-full flex items-center gap-1 px-3 py-1.5 transition-colors">
+                      <span className="text-white text-xs font-medium">
+                        مشاهده همه
+                      </span>
+                      <ChevronLeft className="size-4 text-white" />
+                    </button>
+                  </Link>
                 </div>
               </div>
             </SwiperSlide>
