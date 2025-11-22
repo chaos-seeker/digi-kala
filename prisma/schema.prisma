@@ -62,3 +62,13 @@ model Brand {
   @@map("brands")
 }
 
+model Color {
+  id        String   @id @default(cuid())
+  name      String
+  hex       String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("colors")
+}
+

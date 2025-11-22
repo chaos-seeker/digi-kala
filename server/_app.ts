@@ -7,6 +7,10 @@ import { create as createCategory } from './category/create';
 import { deleteCategory } from './category/delete';
 import { edit as editCategory } from './category/edit';
 import { getAll as getAllCategories } from './category/get-all';
+import { create as createColor } from './color/create';
+import { deleteColor } from './color/delete';
+import { edit as editColor } from './color/edit';
+import { getAll as getAllColors } from './color/get-all';
 import { create } from './hero-slider/create';
 import { deleteHeroSlider } from './hero-slider/delete';
 import { edit } from './hero-slider/edit';
@@ -44,6 +48,12 @@ export const appRouter = router({
     create: createBrand,
     edit: editBrand,
     delete: deleteBrand,
+  }),
+  color: router({
+    getAll: getAllColors,
+    create: createColor,
+    edit: editColor,
+    delete: deleteColor,
   }),
 });
 

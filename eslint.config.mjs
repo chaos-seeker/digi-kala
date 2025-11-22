@@ -107,10 +107,7 @@ export default [
         },
       ],
 
-      // React Props
       'react/no-unused-prop-types': 'warn',
-
-      // Imports
       'import/no-unresolved': [
         'error',
         {
@@ -127,27 +124,17 @@ export default [
         },
       ],
       'simple-import-sort/exports': 'warn',
-
-      // Prettier
       'prettier/prettier': 'error',
-
-      // React
       'react/jsx-uses-react': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react/jsx-key': 'error',
-
-      // Hooks
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'off',
-
-      // A11y
       'jsx-a11y/alt-text': 'warn',
       'jsx-a11y/anchor-is-valid': 'warn',
       'jsx-a11y/click-events-have-key-events': 'off',
       'jsx-a11y/no-static-element-interactions': 'off',
-
-      // Shorthand
       'object-shorthand': ['error', 'always'],
     },
   },

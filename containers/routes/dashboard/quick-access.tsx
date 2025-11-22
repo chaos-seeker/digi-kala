@@ -1,5 +1,5 @@
 import { Button } from '@/ui/button';
-import { BookOpen, Image as ImageIcon, LayoutGrid, Star } from 'lucide-react';
+import { BookOpen, Image as ImageIcon, LayoutGrid, Palette, Star } from 'lucide-react';
 import Link from 'next/link';
 
 const dashboardPages = [
@@ -30,6 +30,13 @@ const dashboardPages = [
     href: '/dashboard/brand',
     icon: Star,
     color: 'bg-yellow-500',
+  },
+  {
+    title: 'مدیریت رنگ‌ها',
+    description: 'مدیریت رنگ‌های محصولات',
+    href: '/dashboard/color',
+    icon: Palette,
+    color: 'bg-pink-500',
   },
 ];
 
