@@ -26,7 +26,9 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import type React from 'react';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 export default function Header() {
   const user = useKillua(userSlice);
@@ -122,26 +124,64 @@ const Login = () => {
 
 const Cart = () => {
   const cart = useKillua(cartSlice);
+  const user = useKillua(userSlice);
   const totalItems = cart.selectors.totalItems();
   const cartItems = cart.get();
+
+  const createOrderMutation = trpc.order.create.useMutation({
+    onSuccess: (result) => {
+      toast.success(result.message);
+      cart.reducers.reset();
+    },
+    onError: (error) => {
+      toast.error(error?.message);
+    },
+  });
+
+  const handleCheckout = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const userData = user.get();
+    if (!userData) {
+      toast.error('لطفا وارد حساب کاربری خود شوید');
+      return;
+    }
+
+    if (cartItems.length === 0) {
+      toast.error('سبد خرید شما خالی است');
+      return;
+    }
+
+    const totalPrice = cart.selectors.totalPrice();
+    const totalDiscount = cart.selectors.totalDiscount();
+    const originalAmount = totalPrice + totalDiscount;
+    const roundedOriginalAmount = Math.round(originalAmount * 100) / 100;
+    const roundedDiscount = Math.round(totalDiscount * 100) / 100;
+    const roundedAmount = Math.round(totalPrice * 100) / 100;
+
+    createOrderMutation.mutate({
+      userId: userData.id,
+      originalAmount: roundedOriginalAmount,
+      discount: roundedDiscount,
+      amount: roundedAmount,
+    });
+  };
 
   return (
     <HoverCard openDelay={200} closeDelay={100}>
       <HoverCardTrigger asChild>
-        <Link href="/cart">
-          <Button
-            variant="outline"
-            size="icon"
-            className="relative gap-1 hover:bg-primary hover:text-white py-5"
-          >
-            <ShoppingBag className="size-5" />
-            {totalItems > 0 && (
-              <span className="absolute -top-1 -right-1 flex border-white h-4.5 w-4.5 border items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white">
-                {totalItems}
-              </span>
-            )}
-          </Button>
-        </Link>
+        <Button
+          variant="outline"
+          size="icon"
+          className="relative gap-1 hover:bg-primary hover:text-white py-5"
+        >
+          <ShoppingBag className="size-5" />
+          {totalItems > 0 && (
+            <span className="absolute -top-1 -right-1 flex border-white h-4.5 w-4.5 border items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white">
+              {totalItems}
+            </span>
+          )}
+        </Button>
       </HoverCardTrigger>
       {totalItems > 0 && (
         <HoverCardContent className="w-[300px] p-4" align="end">
@@ -216,8 +256,12 @@ const Cart = () => {
               })}
             </div>
           </div>
-          <Button className="w-full hover:bg-primary h-11 mt-2 hover:text-white">
-            ثبت سفارش
+          <Button
+            onClick={handleCheckout}
+            disabled={createOrderMutation.isPending}
+            className="w-full bg-primary hover:bg-primary/90 h-11 mt-2 text-white"
+          >
+            {createOrderMutation.isPending ? 'در حال ثبت...' : 'ثبت سفارش'}
           </Button>
         </HoverCardContent>
       )}

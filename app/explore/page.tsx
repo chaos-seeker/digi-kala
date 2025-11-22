@@ -1,10 +1,12 @@
-import { FiltersLoadingProvider } from '@/containers/routes/explore/filters-loading-context';
 import { CheckboxAccordions } from '@/containers/routes/explore/checkbox-accordions';
+import { FiltersLoadingProvider } from '@/containers/routes/explore/filters-loading-context';
 import { Products } from '@/containers/routes/explore/products';
 import { Sort } from '@/containers/routes/explore/sort';
 import { appRouter } from '@/server/_app';
 import { createContext } from '@/server/context';
 import Link from 'next/link';
+
+export const dynamic = 'force-dynamic';
 
 interface PageProps {
   searchParams: Promise<{

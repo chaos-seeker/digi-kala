@@ -11,6 +11,8 @@ import { createContext } from '@/server/context';
 import { TProduct } from '@/types/product';
 import { notFound } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+
 interface PageProps {
   params: Promise<{
     slug: string;

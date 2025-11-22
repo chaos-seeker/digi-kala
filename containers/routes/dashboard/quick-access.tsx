@@ -5,7 +5,9 @@ import {
   LayoutGrid,
   Package,
   Palette,
+  ShoppingBag,
   Star,
+  Users,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -51,6 +53,20 @@ const dashboardPages = [
     href: '/dashboard/product',
     icon: Package,
     color: 'bg-indigo-500',
+  },
+  {
+    title: 'مدیریت سفارش‌ها',
+    description: 'مدیریت سفارش‌های کاربران',
+    href: '/dashboard/manage-orders',
+    icon: ShoppingBag,
+    color: 'bg-red-500',
+  },
+  {
+    title: 'مدیریت کاربران',
+    description: 'مدیریت کاربران سیستم',
+    href: '/dashboard/manage-users',
+    icon: Users,
+    color: 'bg-teal-500',
   },
 ];
 

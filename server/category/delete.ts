@@ -1,7 +1,7 @@
-import { publicProcedure } from '../trpc';
+import { localhostOnlyProcedure } from '../trpc';
 import { z } from 'zod';
 
-export const deleteCategory = publicProcedure
+export const deleteCategory = localhostOnlyProcedure
   .input(
     z.object({
       id: z.string(),

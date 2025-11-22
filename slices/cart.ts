@@ -18,6 +18,12 @@ export const cartSlice = slice({
         const discount = product.discount ?? 0;
         return acc + price * (1 - discount / 100);
       }, 0),
+    totalDiscount: (value) =>
+      value.reduce((acc, product) => {
+        const price = product.price ?? 0;
+        const discount = product.discount ?? 0;
+        return acc + (price * discount) / 100;
+      }, 0),
     totalItems: (value) => value.length,
   },
   reducers: {
@@ -30,5 +36,6 @@ export const cartSlice = slice({
     },
     remove: (value, payload: TProduct) =>
       value.filter((product) => product.id !== payload.id),
+    reset: () => [],
   },
 });

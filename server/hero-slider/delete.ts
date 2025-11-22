@@ -1,7 +1,7 @@
-import { publicProcedure } from '../trpc';
+import { localhostOnlyProcedure } from '../trpc';
 import { z } from 'zod';
 
-export const deleteHeroSlider = publicProcedure
+export const deleteHeroSlider = localhostOnlyProcedure
   .input(
     z.object({
       id: z.string(),

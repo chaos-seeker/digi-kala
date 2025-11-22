@@ -15,6 +15,9 @@ import { create } from './hero-slider/create';
 import { deleteHeroSlider } from './hero-slider/delete';
 import { edit } from './hero-slider/edit';
 import { getAll } from './hero-slider/get-all';
+import { create as createOrder } from './order/create';
+import { getAll as getAllOrders } from './order/get-all';
+import { getByUserId as getOrdersByUserId } from './order/get-by-user-id';
 import { create as createProduct } from './product/create';
 import { deleteProduct } from './product/delete';
 import { edit as editProduct } from './product/edit';
@@ -27,6 +30,7 @@ import { deleteStory } from './story/delete';
 import { edit as editStory } from './story/edit';
 import { getAll as getAllStories } from './story/get-all';
 import { router } from './trpc';
+import { getAll as getAllUsers } from './user/get-all';
 
 export const appRouter = router({
   auth: router({
@@ -70,6 +74,14 @@ export const appRouter = router({
     edit: editProduct,
     delete: deleteProduct,
     search: searchProducts,
+  }),
+  order: router({
+    create: createOrder,
+    getAll: getAllOrders,
+    getByUserId: getOrdersByUserId,
+  }),
+  user: router({
+    getAll: getAllUsers,
   }),
 });
 

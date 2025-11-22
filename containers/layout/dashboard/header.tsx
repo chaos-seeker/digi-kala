@@ -60,6 +60,8 @@ const QuickAccess = () => {
     { href: '/dashboard/category', label: 'مدیریت دسته بندی' },
     { href: '/dashboard/color', label: 'مدیریت رنگ‌ها' },
     { href: '/dashboard/product', label: 'مدیریت محصولات' },
+    { href: '/dashboard/manage-orders', label: 'مدیریت سفارشات' },
+    { href: '/dashboard/manage-users', label: 'مدیریت کاربران' },
   ];
 
   return (
