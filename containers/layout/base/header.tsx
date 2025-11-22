@@ -162,7 +162,7 @@ const Cart = () => {
                   >
                     <div className="relative w-20 h-20 shrink-0 rounded-lg overflow-hidden bg-gray-100">
                       <Image
-                        src={product.images[0] || '/temp/product-image.webp'}
+                        src={product.images[0]}
                         alt={product.nameFa}
                         fill
                         className="object-cover"
@@ -291,9 +291,7 @@ const Search = () => {
                       >
                         <div className="relative w-16 h-16 shrink-0 rounded-lg overflow-hidden bg-gray-100">
                           <Image
-                            src={
-                              product.images[0] || '/temp/product-image.webp'
-                            }
+                            src={product.images[0]}
                             alt={product.nameFa}
                             fill
                             className="object-cover"

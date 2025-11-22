@@ -68,7 +68,7 @@ export const History = ({ products }: HistoryProps) => {
           title: product.nameFa,
           price: product.price,
           discount: product.discount,
-          image: product.images[0] || '/temp/product-image.webp',
+          image: product.images[0],
           href: `/products/${product.slug}`,
         })),
       });

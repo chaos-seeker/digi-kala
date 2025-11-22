@@ -20,6 +20,7 @@ import { deleteProduct } from './product/delete';
 import { edit as editProduct } from './product/edit';
 import { getAll as getAllProducts } from './product/get-all';
 import { getBySlug as getProductBySlug } from './product/get-by-slug';
+import { getFiltered as getFilteredProducts } from './product/get-filtered';
 import { search as searchProducts } from './product/search';
 import { create as createStory } from './story/create';
 import { deleteStory } from './story/delete';
@@ -64,6 +65,7 @@ export const appRouter = router({
   product: router({
     getAll: getAllProducts,
     getBySlug: getProductBySlug,
+    getFiltered: getFilteredProducts,
     create: createProduct,
     edit: editProduct,
     delete: deleteProduct,

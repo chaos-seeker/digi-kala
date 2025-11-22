@@ -37,7 +37,7 @@ export function Images({ product }: ImagesProps) {
               <SwiperSlide key={item}>
                 <div className="flex w-full justify-center rounded-lg border p-2">
                   <Image
-                    src={item || '/temp/product-image.webp'}
+                    src={item}
                     alt={product.nameFa}
                     width={260}
                     height={260}
@@ -72,7 +72,7 @@ export function Images({ product }: ImagesProps) {
                     })}
                   >
                     <Image
-                      src={item || '/temp/product-image.webp'}
+                      src={item}
                       alt={product.nameFa}
                       width={70}
                       height={70}

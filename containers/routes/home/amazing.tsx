@@ -123,7 +123,7 @@ export const Amazing = (props: AmazingProps) => {
                   title={product.nameFa}
                   price={product.price}
                   discount={product.discount || 0}
-                  image={product.images[0] || '/temp/product-image.webp'}
+                  image={product.images[0]}
                   href={`/products/${product.slug}`}
                 />
               </SwiperSlide>
