@@ -35,7 +35,6 @@ export const History = ({ products }: HistoryProps) => {
   const swiperRef = useRef<any>(null);
 
   const categories = useMemo(() => {
-    // Fixed titles for the 4 boxes
     const fixedTitles = [
       'لوازم دیجیتال',
       'لوازم خانگی',
@@ -43,16 +42,13 @@ export const History = ({ products }: HistoryProps) => {
       'لوازم تحریر',
     ];
 
-    // Always create 4 boxes with 4 products each
     const groups: Category[] = [];
 
     for (let i = 0; i < 4; i++) {
       const startIndex = i * 4;
       const endIndex = startIndex + 4;
-      // Slice 4 products for each box
       let groupProducts = products.slice(startIndex, endIndex);
 
-      // If not enough products, cycle through the products array
       if (groupProducts.length < 4 && products.length > 0) {
         const remaining = 4 - groupProducts.length;
         const additionalProducts = products.slice(0, remaining);

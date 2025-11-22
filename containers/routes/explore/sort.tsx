@@ -64,3 +64,4 @@ export function Sort({ initialSort = 'newest' }: SortProps) {
     </div>
   );
 }
+

@@ -8,19 +8,35 @@ import { Plus, Trash2 } from 'lucide-react';
 
 interface PriceWithButtonProps {
   product: TProduct;
+  selectedColorId?: string;
 }
 
-export function PriceWithButton({ product }: PriceWithButtonProps) {
+export function PriceWithButton({
+  product,
+  selectedColorId,
+}: PriceWithButtonProps) {
   const cart = useKillua(cartSlice);
-  const isInCart = cart.selectors.isInCart(product);
-
+  const colorId = selectedColorId || product.colors[0]?.id;
+  const selectedColor = colorId
+    ? product.colors.find((c) => c.id === colorId)
+    : undefined;
+  const productWithSelectedColor: TProduct = {
+    ...product,
+    colors: selectedColor ? [selectedColor] : product.colors,
+  };
+  const isInCart = cart.selectors.isInCart(productWithSelectedColor);
   const discount = product.discount ?? 0;
   const priceWithoutDiscount = product.price ?? 0;
   const priceWithDiscount = product.price * (1 - discount / 100);
-  const hasDiscount = discount !== 0;
+  const hasDiscount = discount > 0;
 
-  const handleAdd = () => cart.reducers.add(product);
-  const handleRemove = () => cart.reducers.remove(product);
+  const handleAdd = () => {
+    cart.reducers.add(productWithSelectedColor);
+  };
+
+  const handleRemove = () => {
+    cart.reducers.remove(productWithSelectedColor);
+  };
 
   return (
     <div className="lg:flex lg:items-center">

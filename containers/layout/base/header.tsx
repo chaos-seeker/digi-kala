@@ -194,10 +194,11 @@ const Cart = () => {
                 const priceWithDiscount = product.price * (1 - discount / 100);
                 const hasDiscount = discount !== 0;
                 const selectedColor = product.colors?.[0];
+                const uniqueKey = `${product.id}-${selectedColor?.id || 'no-color'}`;
 
                 return (
                   <div
-                    key={product.id}
+                    key={uniqueKey}
                     className="flex items-start gap-3 p-3 border rounded-lg"
                   >
                     <div className="relative w-20 h-20 shrink-0 rounded-lg overflow-hidden bg-gray-100">

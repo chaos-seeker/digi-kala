@@ -6,6 +6,7 @@ import { Images } from '@/containers/routes/single-product/images';
 import { PriceWithButton } from '@/containers/routes/single-product/price-with-button';
 import { SimilarProducts } from '@/containers/routes/single-product/similar-products';
 import { Title } from '@/containers/routes/single-product/title';
+import { ProductContent } from '@/containers/routes/single-product/product-content';
 import { appRouter } from '@/server/_app';
 import { createContext } from '@/server/context';
 import { TProduct } from '@/types/product';
@@ -35,15 +36,7 @@ export default async function Page(props: PageProps) {
     <>
       <div className="container">
         <Breadcrumb product={product as TProduct} />
-        <div className="flex flex-col gap-4 lg:flex-row">
-          <Images product={product as TProduct} />
-          <div className="flex-1 min-w-0">
-            <Title product={product as TProduct} />
-            <Colors product={product as TProduct} />
-            <Attributes product={product as TProduct} />
-          </div>
-          <PriceWithButton product={product as TProduct} />
-        </div>
+        <ProductContent product={product as TProduct} />
       </div>
       <Description product={product as TProduct} />
       <SimilarProducts products={products as TProduct[]} />

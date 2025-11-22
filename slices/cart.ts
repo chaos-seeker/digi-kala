@@ -10,8 +10,14 @@ export const cartSlice = slice({
   selectors: {
     isEmpty: (value) => !value.length,
 
-    isInCart: (value, payload: TProduct) =>
-      value.some((product) => product.id === payload.id),
+    isInCart: (value, payload: TProduct) => {
+      const payloadColorId = payload.colors[0]?.id;
+      return value.some(
+        (product) =>
+          product.id === payload.id &&
+          product.colors[0]?.id === payloadColorId,
+      );
+    },
     totalPrice: (value) =>
       value.reduce((acc, product) => {
         const price = product.price ?? 0;
@@ -28,14 +34,26 @@ export const cartSlice = slice({
   },
   reducers: {
     add: (value, payload: TProduct) => {
-      const existingProductIndex = value.findIndex((p) => p.id === payload.id);
+      const payloadColorId = payload.colors[0]?.id;
+      const existingProductIndex = value.findIndex(
+        (p) =>
+          p.id === payload.id && p.colors[0]?.id === payloadColorId,
+      );
       if (existingProductIndex !== -1) {
         return value;
       }
       return [...value, payload];
     },
-    remove: (value, payload: TProduct) =>
-      value.filter((product) => product.id !== payload.id),
+    remove: (value, payload: TProduct) => {
+      const payloadColorId = payload.colors[0]?.id;
+      return value.filter(
+        (product) =>
+          !(
+            product.id === payload.id &&
+            product.colors[0]?.id === payloadColorId
+          ),
+      );
+    },
     reset: () => [],
   },
 });
