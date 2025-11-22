@@ -35,7 +35,7 @@ export default function Header() {
           <div className="flex items-center justify-between">
             <Link href="/">
               <Image
-                src="images/layout/logo.svg"
+                src="/images/layout/logo.svg"
                 alt="logo"
                 width={130}
                 height={130}
@@ -161,7 +161,7 @@ const Search = () => {
           <p className="text-sm flex gap-1 text-gray-400">
             جستجو در{' '}
             <Image
-              src="images/layout/typography.svg"
+              src="/images/layout/typography.svg"
               alt="digikala"
               width={50}
               height={50}
