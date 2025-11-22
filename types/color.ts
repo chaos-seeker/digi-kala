@@ -1,7 +1,5 @@
-export type Color = {
+export type TColor = {
   id: string;
   name: string;
   hex: string;
-  createdAt?: Date;
-  updatedAt?: Date;
 };

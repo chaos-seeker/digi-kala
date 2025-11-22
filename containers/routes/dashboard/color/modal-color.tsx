@@ -1,7 +1,7 @@
 'use client';
 
 import { trpc } from '@/lib/trpc';
-import { Color } from '@/types/color';
+import { TColor } from '@/types/color';
 import { Button } from '@/ui/button';
 import {
   Dialog,
@@ -32,7 +32,7 @@ type FormData = z.infer<typeof formSchema>;
 interface ModalColorProps {
   children: React.ReactNode;
   mode: 'add' | 'edit';
-  color?: Color;
+  color?: TColor;
   onSuccess?: () => void;
 }
 
@@ -177,10 +177,8 @@ export function ModalColor({
                   value={field.value || ''}
                   onChange={(e) => {
                     if (isUpdatingRef.current) return;
-
                     const hex = e.target.value;
                     field.onChange(e);
-
                     if (
                       /^#[0-9A-Fa-f]{6}$/.test(hex) &&
                       hex !== colorPickerValue
@@ -199,7 +197,6 @@ export function ModalColor({
                   value={colorPickerValue}
                   onChange={(e) => {
                     if (isUpdatingRef.current) return;
-
                     const hex = e.target.value;
                     isUpdatingRef.current = true;
                     setColorPickerValue(hex);
@@ -214,7 +211,6 @@ export function ModalColor({
               </div>
             )}
           />
-
           <DialogFooter>
             <Button type="submit" className="w-full py-6" disabled={isLoading}>
               {isLoading ? (

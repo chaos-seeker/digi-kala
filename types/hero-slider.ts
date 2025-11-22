@@ -3,4 +3,3 @@ export type THeroSlider = {
   image: string;
   link: string;
 };
-

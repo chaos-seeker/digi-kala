@@ -2,7 +2,7 @@
 
 import { ModalColor } from './modal-color';
 import { trpc } from '@/lib/trpc';
-import { Color } from '@/types/color';
+import { TColor } from '@/types/color';
 import { Button } from '@/ui/button';
 import {
   createColumnHelper,
@@ -14,7 +14,7 @@ import { Edit, Loader2, Trash2 } from 'lucide-react';
 import { useMemo } from 'react';
 import toast from 'react-hot-toast';
 
-const columnHelper = createColumnHelper<Color>();
+const columnHelper = createColumnHelper<TColor>();
 
 export const List = () => {
   const fetchData = trpc.color.getAll.useQuery();
