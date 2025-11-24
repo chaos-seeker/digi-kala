@@ -3,7 +3,6 @@ import { FiltersLoadingProvider } from '@/containers/routes/explore/filters-load
 import { Products } from '@/containers/routes/explore/products';
 import { Sort } from '@/containers/routes/explore/sort';
 import { appRouter } from '@/server/_app';
-import { createContext } from '@/server/context';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -27,7 +26,7 @@ export default async function Page({ searchParams }: PageProps) {
   const categorySlugs = filterCategory?.split(',').filter(Boolean) || [];
   const brandSlugs = filterBrand?.split(',').filter(Boolean) || [];
 
-  const caller = appRouter.createCaller(await createContext());
+  const caller = appRouter.createCaller({});
 
   const [productsResult, categoriesResult, brandsResult] = await Promise.all([
     caller.product.getFiltered({

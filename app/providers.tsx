@@ -8,6 +8,7 @@ import { httpBatchLink } from '@trpc/client';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { PropsWithChildren, Suspense, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
+import superjson from 'superjson';
 
 const Bprogress = (props: PropsWithChildren) => {
   return (
@@ -39,6 +40,7 @@ const ReactQuery = (props: PropsWithChildren) => {
       links: [
         httpBatchLink({
           url: '/api/trpc',
+          transformer: superjson,
         }),
       ],
     }),

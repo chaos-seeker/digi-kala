@@ -1,7 +1,8 @@
 import { publicProcedure } from '../trpc';
+import { prisma } from '@/lib/prisma';
 
-export const getAll = publicProcedure.query(async ({ ctx }) => {
-  const heroSliders = await ctx.prisma.heroSlider.findMany({
+export const getAll = publicProcedure.query(async () => {
+  const heroSliders = await prisma.heroSlider.findMany({
     orderBy: {
       createdAt: 'desc',
     },

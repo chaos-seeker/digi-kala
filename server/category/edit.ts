@@ -1,7 +1,8 @@
-import { localhostOnlyProcedure } from '../trpc';
+import { developmentOnlyProcedure } from '../trpc';
+import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 
-export const edit = localhostOnlyProcedure
+export const edit = developmentOnlyProcedure
   .input(
     z.object({
       id: z.string(),
@@ -10,8 +11,8 @@ export const edit = localhostOnlyProcedure
       slug: z.string(),
     }),
   )
-  .mutation(async ({ ctx, input }) => {
-    const category = await (ctx.prisma as any).category.update({
+  .mutation(async ({ input }) => {
+    const category = await prisma.category.update({
       where: { id: input.id },
       data: {
         title: input.title,

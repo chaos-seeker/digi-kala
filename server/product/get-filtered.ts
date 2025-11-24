@@ -1,4 +1,5 @@
 import { publicProcedure } from '../trpc';
+import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 
 export const getFiltered = publicProcedure
@@ -10,10 +11,8 @@ export const getFiltered = publicProcedure
       sort: z.enum(['newest', 'highest', 'lowest']).default('newest'),
     }),
   )
-  .query(async ({ ctx, input }) => {
-    const prisma = ctx.prisma as any;
-
-    const where: any = {};
+  .query(async ({ input }) => {
+    const where: Record<string, unknown> = {};
 
     if (input.text) {
       where.nameFa = {
@@ -36,6 +35,13 @@ export const getFiltered = publicProcedure
     let filteredProducts = products.map((product: any) => ({
       ...product,
       colors: product.colors.map((pc: any) => pc.color),
+      attributes:
+        product.attributes && Array.isArray(product.attributes)
+          ? product.attributes.map((attr: any) => ({
+              key: attr.key,
+              value: attr.value,
+            }))
+          : [],
       category: product.category as any,
       brand: product.brand as any,
     }));

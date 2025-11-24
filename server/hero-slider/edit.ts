@@ -1,7 +1,8 @@
-import { localhostOnlyProcedure } from '../trpc';
+import { developmentOnlyProcedure } from '../trpc';
+import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 
-export const edit = localhostOnlyProcedure
+export const edit = developmentOnlyProcedure
   .input(
     z.object({
       id: z.string(),
@@ -9,8 +10,8 @@ export const edit = localhostOnlyProcedure
       link: z.string(),
     }),
   )
-  .mutation(async ({ ctx, input }) => {
-    const heroSlider = await ctx.prisma.heroSlider.update({
+  .mutation(async ({ input }) => {
+    const heroSlider = await prisma.heroSlider.update({
       where: { id: input.id },
       data: {
         image: input.image,

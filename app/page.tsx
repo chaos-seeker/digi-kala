@@ -7,12 +7,11 @@ import { History } from '@/containers/routes/home/history';
 import { Story } from '@/containers/routes/home/story';
 import { TwoBanner } from '@/containers/routes/home/two-banner';
 import { appRouter } from '@/server/_app';
-import { createContext } from '@/server/context';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Page() {
-  const caller = appRouter.createCaller(await createContext());
+  const caller = appRouter.createCaller({});
   const [
     heroSlidersData,
     storiesData,

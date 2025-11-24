@@ -1,4 +1,5 @@
 import { publicProcedure } from '../trpc';
+import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 
 export const getByUserId = publicProcedure
@@ -7,10 +8,8 @@ export const getByUserId = publicProcedure
       userId: z.string(),
     }),
   )
-  .query(async ({ ctx, input }) => {
-    const prisma = ctx.prisma as any;
-
-    const orders = await prisma.$queryRaw`
+  .query(async ({ input }) => {
+    const orders = (await prisma.$queryRaw`
       SELECT 
         o.*,
         json_build_object(
@@ -22,7 +21,7 @@ export const getByUserId = publicProcedure
       INNER JOIN users u ON o.user_id = u.id
       WHERE o.user_id = ${input.userId}
       ORDER BY o.created_at DESC
-    `;
+    `) as any[];
 
     return orders.map((order: any) => ({
       id: order.id,
@@ -35,5 +34,3 @@ export const getByUserId = publicProcedure
       user: order.user,
     }));
   });
-
-

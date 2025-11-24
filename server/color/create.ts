@@ -1,15 +1,16 @@
-import { localhostOnlyProcedure } from '../trpc';
+import { developmentOnlyProcedure } from '../trpc';
+import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 
-export const create = localhostOnlyProcedure
+export const create = developmentOnlyProcedure
   .input(
     z.object({
       name: z.string(),
       hex: z.string(),
     }),
   )
-  .mutation(async ({ ctx, input }) => {
-    const color = await (ctx.prisma as any).color.create({
+  .mutation(async ({ input }) => {
+    const color = await prisma.color.create({
       data: {
         name: input.name,
         hex: input.hex,

@@ -1,14 +1,15 @@
-import { localhostOnlyProcedure } from '../trpc';
+import { developmentOnlyProcedure } from '../trpc';
+import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 
-export const deleteHeroSlider = localhostOnlyProcedure
+export const deleteHeroSlider = developmentOnlyProcedure
   .input(
     z.object({
       id: z.string(),
     }),
   )
-  .mutation(async ({ ctx, input }) => {
-    await ctx.prisma.heroSlider.delete({
+  .mutation(async ({ input }) => {
+    await prisma.heroSlider.delete({
       where: { id: input.id },
     });
 

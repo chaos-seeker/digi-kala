@@ -1,7 +1,8 @@
-import { localhostOnlyProcedure } from '../trpc';
+import { developmentOnlyProcedure } from '../trpc';
+import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 
-export const create = localhostOnlyProcedure
+export const create = developmentOnlyProcedure
   .input(
     z.object({
       title: z.string(),
@@ -9,8 +10,8 @@ export const create = localhostOnlyProcedure
       slug: z.string(),
     }),
   )
-  .mutation(async ({ ctx, input }) => {
-    const category = await (ctx.prisma as any).category.create({
+  .mutation(async ({ input }) => {
+    const category = await prisma.category.create({
       data: {
         title: input.title,
         image: input.image,

@@ -3,7 +3,6 @@ import { Description } from '@/containers/routes/single-product/description';
 import { ProductContent } from '@/containers/routes/single-product/product-content';
 import { SimilarProducts } from '@/containers/routes/single-product/similar-products';
 import { appRouter } from '@/server/_app';
-import { createContext } from '@/server/context';
 import { TProduct } from '@/types/product';
 import { notFound } from 'next/navigation';
 
@@ -17,7 +16,7 @@ interface PageProps {
 
 export default async function Page(props: PageProps) {
   const { slug } = await props.params;
-  const caller = appRouter.createCaller(await createContext());
+  const caller = appRouter.createCaller({});
   const [product, products] = await Promise.all([
     caller.product.getBySlug({ slug }),
     caller.product.getAll(),

@@ -1,7 +1,8 @@
-import { localhostOnlyProcedure } from '../trpc';
+import { developmentOnlyProcedure } from '../trpc';
+import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 
-export const create = localhostOnlyProcedure
+export const create = developmentOnlyProcedure
   .input(
     z.object({
       avatar: z.string(),
@@ -10,8 +11,8 @@ export const create = localhostOnlyProcedure
       link: z.string(),
     }),
   )
-  .mutation(async ({ ctx, input }) => {
-    const story = await (ctx.prisma as any).story.create({
+  .mutation(async ({ input }) => {
+    const story = await prisma.story.create({
       data: {
         avatar: input.avatar,
         cover: input.cover,

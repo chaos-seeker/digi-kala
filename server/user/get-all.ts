@@ -1,8 +1,7 @@
 import { publicProcedure } from '../trpc';
+import { prisma } from '@/lib/prisma';
 
-export const getAll = publicProcedure.query(async ({ ctx }) => {
-  const prisma = ctx.prisma as any;
-
+export const getAll = publicProcedure.query(async () => {
   const users = await prisma.user.findMany({
     orderBy: {
       createdAt: 'desc',
@@ -24,5 +23,3 @@ export const getAll = publicProcedure.query(async ({ ctx }) => {
     updatedAt: new Date(user.updatedAt),
   }));
 });
-
-

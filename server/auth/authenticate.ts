@@ -1,4 +1,5 @@
 import { publicProcedure } from '../trpc';
+import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 
 export const authenticate = publicProcedure
@@ -9,12 +10,12 @@ export const authenticate = publicProcedure
       fullName: z.string().min(1),
     }),
   )
-  .mutation(async ({ ctx, input }) => {
-    const existingUser = await ctx.prisma.user.findUnique({
+  .mutation(async ({ input }) => {
+    const existingUser = await prisma.user.findUnique({
       where: { username: input.username },
     });
     if (!existingUser) {
-      const newUser = await ctx.prisma.user.create({
+      const newUser = await prisma.user.create({
         data: {
           username: input.username,
           password: input.password,
