@@ -1,12 +1,7 @@
 import { Breadcrumb } from '@/components/breadcrumb';
-import { Attributes } from '@/containers/routes/single-product/attributes';
-import { Colors } from '@/containers/routes/single-product/colors';
 import { Description } from '@/containers/routes/single-product/description';
-import { Images } from '@/containers/routes/single-product/images';
-import { PriceWithButton } from '@/containers/routes/single-product/price-with-button';
-import { SimilarProducts } from '@/containers/routes/single-product/similar-products';
-import { Title } from '@/containers/routes/single-product/title';
 import { ProductContent } from '@/containers/routes/single-product/product-content';
+import { SimilarProducts } from '@/containers/routes/single-product/similar-products';
 import { appRouter } from '@/server/_app';
 import { createContext } from '@/server/context';
 import { TProduct } from '@/types/product';

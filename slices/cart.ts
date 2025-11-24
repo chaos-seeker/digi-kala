@@ -14,8 +14,7 @@ export const cartSlice = slice({
       const payloadColorId = payload.colors[0]?.id;
       return value.some(
         (product) =>
-          product.id === payload.id &&
-          product.colors[0]?.id === payloadColorId,
+          product.id === payload.id && product.colors[0]?.id === payloadColorId,
       );
     },
     totalPrice: (value) =>
@@ -36,8 +35,7 @@ export const cartSlice = slice({
     add: (value, payload: TProduct) => {
       const payloadColorId = payload.colors[0]?.id;
       const existingProductIndex = value.findIndex(
-        (p) =>
-          p.id === payload.id && p.colors[0]?.id === payloadColorId,
+        (p) => p.id === payload.id && p.colors[0]?.id === payloadColorId,
       );
       if (existingProductIndex !== -1) {
         return value;
