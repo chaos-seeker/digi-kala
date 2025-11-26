@@ -57,14 +57,14 @@ const dashboardPages = [
   {
     title: 'مدیریت سفارش‌ها',
     description: 'مدیریت سفارش‌های کاربران',
-    href: '/dashboard/manage-orders',
+    href: '/dashboard/orders',
     icon: ShoppingBag,
     color: 'bg-red-500',
   },
   {
     title: 'مدیریت کاربران',
     description: 'مدیریت کاربران سیستم',
-    href: '/dashboard/manage-users',
+    href: '/dashboard/users',
     icon: Users,
     color: 'bg-teal-500',
   },
