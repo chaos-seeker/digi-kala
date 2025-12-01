@@ -60,7 +60,7 @@ export const Categories = (props: CategoriesProps) => {
               {props.data?.map((category) => (
                 <SwiperSlide key={category.id} className="!w-auto">
                   <Link
-                    href={`/explore`}
+                    href={`/explore?category=${category.slug}`}
                     className="flex flex-col items-center"
                   >
                     <div className="relative w-24 h-24 mb-2 overflow-hidden duration-300">
@@ -104,7 +104,7 @@ export const Categories = (props: CategoriesProps) => {
           {props.data?.map((category) => (
             <Link
               key={category.id}
-              href={`/category/${category.slug}`}
+              href={`/explore?category=${category.slug}`}
               className="flex flex-col items-center"
             >
               <div className="relative w-26 h-26 mb-2 overflow-hidden duration-300">

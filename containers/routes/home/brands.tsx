@@ -59,7 +59,7 @@ export const Brands = (props: BrandsProps) => {
             {props.data?.map((brand, index) => (
               <SwiperSlide key={brand.id} className="!w-auto">
                 <Link
-                  href={`/explore`}
+                  href={`/explore?brand=${brand.slug}`}
                   className={cn(
                     'flex items-center justify-center p-4 duration-300',
                     index === props.data.length - 1 && 'border-l-0 pl-0',
