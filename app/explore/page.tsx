@@ -56,7 +56,7 @@ export default async function Page({ searchParams }: PageProps) {
           <span className="h-px grow bg-gray-200" />
           <Sort initialSort={sort} />
         </div>
-        <div className="flex lg:gap-3">
+        <div className="flex flex-col lg:flex-row gap-3">
           <CheckboxAccordions categories={categories} brands={brands} />
           <div className="grid flex-1 gap-3">
             <Products initialProducts={initialProducts} />

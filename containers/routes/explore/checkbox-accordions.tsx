@@ -18,7 +18,7 @@ export function CheckboxAccordions({
   return (
     <div className="lg:relative">
       <div className="sticky top-3 flex flex-col gap-3 overflow-y-auto">
-        <div className="hidden min-w-64 lg:block">
+        <div className="min-w-64">
           <div className="flex flex-col gap-3">
             <SearchTextBadge />
             <CategoriesAccordion categories={categories} />
